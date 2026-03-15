@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onelife Intelligence — Command Center</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#0a0a0a; color:#e5e5e5; min-height:100vh; }
+  .container { max-width:1200px; margin:0 auto; padding:16px; }
+  
+  .header { text-align:center; padding:24px 0 16px; border-bottom:1px solid #262626; margin-bottom:24px; }
+  .header h1 { font-size:24px; font-weight:700; background:linear-gradient(135deg,#6366f1,#8b5cf6,#f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header .sub { color:#737373; font-size:13px; margin-top:4px; }
+  .header .updated { color:#525252; font-size:11px; margin-top:8px; }
+  
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+  .stat { background:#171717; border:1px solid #262626; border-radius:12px; padding:16px; text-align:center; }
+  .stat .num { font-size:28px; font-weight:700; }
+  .stat .label { font-size:11px; color:#737373; text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+  
+  .section { margin-bottom:24px; }
+  .section h2 { font-size:16px; font-weight:600; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #262626; }
+  
+  .agents { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+  .agent-card { background:#171717; border:1px solid #262626; border-radius:12px; padding:16px; text-align:center; }
+  .agent-icon { font-size:32px; margin-bottom:8px; }
+  .agent-name { font-weight:600; font-size:15px; }
+  .agent-role { color:#737373; font-size:11px; margin-top:2px; }
+  .agent-status { font-size:12px; margin-top:8px; }
+  .agent-tasks { color:#525252; font-size:11px; margin-top:4px; }
+  
+  .goals { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+  .goal-card { background:#171717; border:1px solid #262626; border-radius:12px; padding:16px; }
+  .goal-title { font-weight:600; font-size:14px; }
+  .goal-target { color:#737373; font-size:12px; margin-top:6px; }
+  
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:11px; color:#737373; text-transform:uppercase; letter-spacing:1px; padding:8px 12px; border-bottom:1px solid #262626; }
+  td { padding:10px 12px; border-bottom:1px solid #1a1a1a; font-size:13px; }
+  .issue-title { font-weight:500; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; color:#fff; }
+  
+  .proj-header { display:flex; align-items:center; gap:8px; margin:20px 0 8px; }
+  .proj-dot { width:10px; height:10px; border-radius:50%; }
+  .proj-name { font-weight:600; font-size:14px; }
+  .proj-count { color:#525252; font-size:12px; }
+  
+  .footer { text-align:center; padding:24px; color:#404040; font-size:11px; }
+
+  @media (max-width:600px) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .agents { grid-template-columns:repeat(3,1fr); }
+    .agent-card { padding:12px 8px; }
+    .agent-icon { font-size:24px; }
+    .agent-name { font-size:13px; }
+    table { font-size:12px; }
+    td, th { padding:8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🦞 Onelife Intelligence</h1>
+    <div class="sub">Agent Command Center</div>
+    <div class="updated">Last updated: 16 Mar 2026, 01:33 SAST</div>
+  </div>
+  
+  <div class="stats">
+    <div class="stat"><div class="num">6</div><div class="label">Agents</div></div>
+    <div class="stat"><div class="num" style="color:#ef4444">1</div><div class="label">Critical</div></div>
+    <div class="stat"><div class="num" style="color:#3b82f6">0</div><div class="label">In Progress</div></div>
+    <div class="stat"><div class="num" style="color:#22c55e">0</div><div class="label">Done</div></div>
+  </div>
+  
+  <div class="section">
+    <h2>Agent Team</h2>
+    <div class="agents">
+      
+    <div class="agent-card">
+        <div class="agent-icon">👑</div>
+        <div class="agent-name">Jarvis</div>
+        <div class="agent-role">Chief Executive Officer</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    <div class="agent-card">
+        <div class="agent-icon">🔭</div>
+        <div class="agent-name">Scout</div>
+        <div class="agent-role">Intelligence Analyst</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    <div class="agent-card">
+        <div class="agent-icon">🔬</div>
+        <div class="agent-name">Sage</div>
+        <div class="agent-role">Research Director</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    <div class="agent-card">
+        <div class="agent-icon">⚡</div>
+        <div class="agent-name">Cipher</div>
+        <div class="agent-role">CTO</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    <div class="agent-card">
+        <div class="agent-icon">✨</div>
+        <div class="agent-name">Nova</div>
+        <div class="agent-role">Content Director</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    <div class="agent-card">
+        <div class="agent-icon">🛡️</div>
+        <div class="agent-name">Ghost</div>
+        <div class="agent-role">Operations Manager</div>
+        <div class="agent-status" style="color:#6b7280">● idle</div>
+        <div class="agent-tasks">0 tasks</div>
+    </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Goals</h2>
+    <div class="goals">
+      
+    <div class="goal-card">
+        <div class="goal-title">Onelife monthly revenue to R1.5M+</div>
+        <div class="goal-target">Grow from R1.3M to R1.5M+ through online, SEO, content marketing, and new store expansion.</div>
+    </div>
+    <div class="goal-card">
+        <div class="goal-title">Polymarket bot profitable at $200+ capital</div>
+        <div class="goal-target">V3 multi-strategy bot generating consistent daily returns. Validate all strategies.</div>
+    </div>
+    <div class="goal-card">
+        <div class="goal-title">Launch JARVIS AI with first paying client</div>
+        <div class="goal-target">Landing page live, case study published, first client onboarded with deployed agent team.</div>
+    </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Task Board (18 tasks)</h2>
+
+    <div class="proj-header">
+      <div class="proj-dot" style="background:#10b981"></div>
+      <div class="proj-name">Expand Onelife</div>
+      <div class="proj-count">8 tasks</div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Task</th><th>Status</th><th>Agent</th></tr></thead>
+      <tbody>
+        
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-6: Biweekly TikTok content batch</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-2: Weekly SEO report (GA4 + GSC)</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-5: Weekly competitor pricing scan</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-4: Fix 73 ghost/draft products</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-3: Write remaining blog posts (Menopause, Liver, Joint, Iron)</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-1: Test task</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#22c55e">low</span></td>
+        <td class="issue-title">ONE-8: Verify Supplement Guides nav after CDN clear</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#22c55e">low</span></td>
+        <td class="issue-title">ONE-7: Submit remaining 2 guide URLs to GSC</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+      </tbody>
+    </table>
+    
+    <div class="proj-header">
+      <div class="proj-dot" style="background:#8b5cf6"></div>
+      <div class="proj-name">Polymarket Trading</div>
+      <div class="proj-count">5 tasks</div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Task</th><th>Status</th><th>Agent</th></tr></thead>
+      <tbody>
+        
+    <tr>
+        <td><span class="badge" style="background:#ef4444">critical</span></td>
+        <td class="issue-title">ONE-9: V3 bot: validate maker arb during US hours</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-11: Research maker order rebate optimization</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-10: Implement auto-claim for resolved markets</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-13: Investigate sponsored reward farming viability</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-12: Build fee calculator with real CLOB data</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+      </tbody>
+    </table>
+    
+    <div class="proj-header">
+      <div class="proj-dot" style="background:#f59e0b"></div>
+      <div class="proj-name">JARVIS AI</div>
+      <div class="proj-count">5 tasks</div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Task</th><th>Status</th><th>Agent</th></tr></thead>
+      <tbody>
+        
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-15: Write Onelife case study</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#f97316">high</span></td>
+        <td class="issue-title">ONE-14: Build landing page (jarvis.co.za or similar)</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-18: Set up Paperclip for multi-tenant deployment</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-17: Research SA market for AI services</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+    <tr>
+        <td><span class="badge" style="background:#eab308">medium</span></td>
+        <td class="issue-title">ONE-16: Create sample intelligence report</td>
+        <td><span class="badge" style="background:#6b7280">backlog</span></td>
+        <td> —</td>
+    </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  <div class="footer">Onelife Intelligence × Paperclip × OpenClaw — auto-generated dashboard</div>
+</div>
+</body>
+</html>
