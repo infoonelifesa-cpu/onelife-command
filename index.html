@@ -5,313 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Onelife Command Center</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0d1117; color:#fff; font-family:-apple-system,BlinkMacSystemFont,sans-serif; padding:16px; }
-.header { text-align:center; padding:20px 0; }
-.header h1 { color:#00ff88; font-size:1.5em; }
-.header p { color:#888; font-size:0.85em; }
-.section { background:#16213e; border-radius:10px; padding:16px; margin:12px 0; }
-.section-title { color:#00ff88; font-size:0.9em; font-weight:bold; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
-.metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
-.metric { background:#16213e; border-radius:8px; padding:12px; text-align:center; }
-.metric-value { font-size:1.2em; font-weight:bold; color:#00ff88; }
-.metric-label { font-size:0.7em; color:#888; margin-top:4px; }
-#agents-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:12px;max-width:800px;margin:0 auto}
+.header{text-align:center;padding:20px 0 12px}
+.header h1{color:#00ff88;font-size:1.4em}
+.header .sub{color:#7d8590;font-size:0.8em;margin-top:4px}
+.header .src{color:#3fb950;font-size:0.7em;margin-top:6px;font-family:monospace}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.kpi{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 8px;text-align:center}
+.kpi-v{font-size:1.3em;font-weight:700;color:#00ff88}
+.kpi-l{font-size:0.65em;color:#7d8590;text-transform:uppercase;margin-top:4px}
+.sec{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;margin:10px 0}
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sec-t{color:#e6edf3;font-size:0.9em;font-weight:600}
+.badge{background:#21262d;color:#7d8590;font-size:0.7em;padding:2px 8px;border-radius:10px}
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:600px){.ag{grid-template-columns:repeat(2,1fr)}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.agent-card{background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #555}
+.agent-name{font-weight:700;font-size:0.9em}
+.agent-role{font-size:0.7em;color:#7d8590}
+.agent-model{font-size:0.65em;color:#484f58;margin-top:2px}
+.agent-status{font-size:0.75em;margin-top:4px}
+.project-card{display:inline-flex;align-items:center;gap:6px;background:#0d1117;border-radius:6px;padding:6px 10px;margin:0 6px 6px 0;font-size:0.8em}
+.project-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.issue-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em}
+.issue-key{color:#3fb950;font-family:monospace;font-size:0.85em;min-width:50px}
+.issue-title{flex:1}
+.sim-card{background:#0d1117;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid #3fb950}
+.sim-name{font-weight:600;font-size:0.85em}
+.sim-meta{font-size:0.7em;color:#7d8590}
+.sim-verdict{font-size:0.75em;color:#3fb950;margin-top:4px}
+.seo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px}
+.seo-s{font-size:1.5em;font-weight:700}
+.seo-l{font-size:0.65em;color:#7d8590}
+.seo-st{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:0.8em}
+.seo-st span{color:#7d8590}.seo-st strong{color:#e6edf3}
+.ft{text-align:center;color:#484f58;font-size:0.65em;padding:16px 0}
 </style>
 </head>
 <body>
 <div class="header">
-    <h1>⚡ Onelife Command Center</h1>
-    <p>Operations Intelligence Dashboard</p>
-    <p id="conn-status" style="margin-top:8px;font-size:0.8em">Connecting...</p>
+<h1>⚡ Onelife Command Center</h1>
+<div class="sub">Powered by Paperclip · Onelife Intelligence</div>
+<div class="src">paperclip:3100 · 2026-03-17T04:18</div>
 </div>
-
-<div class="metrics">
-    <div class="metric"><div class="metric-value" id="metric-revenue">-</div><div class="metric-label">MONTHLY REVENUE</div></div>
-    <div class="metric"><div class="metric-value" id="metric-stores">-</div><div class="metric-label">STORES</div></div>
-    <div class="metric"><div class="metric-value" id="metric-products">-</div><div class="metric-label">PRODUCTS</div></div>
-    <div class="metric"><div class="metric-value" id="metric-brands">-</div><div class="metric-label">BRANDS</div></div>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-v">R1.3-1.4M</div><div class="kpi-l">Revenue</div></div>
+<div class="kpi"><div class="kpi-v">3</div><div class="kpi-l">Stores</div></div>
+<div class="kpi"><div class="kpi-v">4,704</div><div class="kpi-l">Products</div></div>
+<div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Open Tasks</div></div>
 </div>
-
-<div class="section">
-    <div class="section-title"><span>🤖 Agent Status</span><span id="agents-count" style="color:#888;font-size:0.85em">0 active</span></div>
-    <div id="agents-grid"></div>
+<div class="sec">
+<div class="sec-h"><span class="sec-t">🤖 Agent Team</span><span class="badge">6 agents</span></div>
+<div class="ag"><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Jarvis</div><div class="agent-role">CEO / Orchestrator</div><div class="agent-model">Claude Opus</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Scout</div><div class="agent-role">Intelligence</div><div class="agent-model">Claude Sonnet</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Sage</div><div class="agent-role">Intelligence</div><div class="agent-model">Kimi K2.5</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Cipher</div><div class="agent-role">CTO / Engineering</div><div class="agent-model">GPT 5.4</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Nova</div><div class="agent-role">Content & Marketing</div><div class="agent-model">Claude Sonnet</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Ghost</div><div class="agent-role">Security & Ops</div><div class="agent-model">Kimi K2.5</div><div class="agent-status" style="color:#555">● idle</div></div></div>
 </div>
-
-<div class="section">
-    <div class="section-title"><span>📋 Active Tasks</span><span id="tasks-count" style="color:#888;font-size:0.85em">0 tasks</span></div>
-    <div id="tasks-list"></div>
+<div class="sec">
+<div class="sec-h"><span class="sec-t">📁 Projects</span><span class="badge">3 active</span></div>
+<div><div class="project-card"><span class="project-dot" style="background:#6366f1"></span><span>Expand Onelife</span></div><div class="project-card"><span class="project-dot" style="background:#8b5cf6"></span><span>Polymarket Trading</span></div><div class="project-card"><span class="project-dot" style="background:#f59e0b"></span><span>JARVIS AI</span></div></div>
 </div>
-
-<div class="section">
-    <div class="section-title"><span>🧪 MiroFish Simulations</span></div>
-    <div id="sims-list"></div>
+<div class="sec">
+<div class="sec-h"><span class="sec-t">📋 Tasks</span><span class="badge">17 open · 0 in progress · 0 done</span></div>
+<div><div class="issue-row"><span class="issue-key">ONE-9</span><span class="issue-title">V3 bot: validate maker arb during US hours</span><span style="color:#ff4444">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-15</span><span class="issue-title">Write Onelife case study</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-14</span><span class="issue-title">Build landing page (jarvis.co.za or similar)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-11</span><span class="issue-title">Research maker order rebate optimization</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-10</span><span class="issue-title">Implement auto-claim for resolved markets</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-6</span><span class="issue-title">Biweekly TikTok content batch</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-2</span><span class="issue-title">Weekly SEO report (GA4 + GSC)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-18</span><span class="issue-title">Set up Paperclip for multi-tenant deployment</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-17</span><span class="issue-title">Research SA market for AI services</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-16</span><span class="issue-title">Create sample intelligence report</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-13</span><span class="issue-title">Investigate sponsored reward farming viability</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-12</span><span class="issue-title">Build fee calculator with real CLOB data</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-5</span><span class="issue-title">Weekly competitor pricing scan</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-4</span><span class="issue-title">Fix 73 ghost/draft products</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-3</span><span class="issue-title">Write remaining blog posts (Menopause, Liver, Joint, Iron)</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-8</span><span class="issue-title">Verify Supplement Guides nav after CDN clear</span><span style="color:#888">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-7</span><span class="issue-title">Submit remaining 2 guide URLs to GSC</span><span style="color:#888">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div></div>
 </div>
-
-<div class="section">
-    <div class="section-title"><span>📊 SEO Scorecard</span></div>
-    <div id="seo-metrics"></div>
+<div class="sec">
+<div class="sec-h"><span class="sec-t">🧪 MiroFish Simulations</span></div>
+<div class="sim-card"><div class="sim-name">JaaS Market Simulation</div><div class="sim-meta">Sonnet 4 · 337 actions</div><div class="sim-verdict">GO - Price R3,999 tier hard</div></div><div class="sim-card"><div class="sim-name">Park View Emporium</div><div class="sim-meta">Sonnet 4 · 198 actions</div><div class="sim-verdict">CONDITIONAL GO - Breakeven R542K/month</div></div>
 </div>
-
-<div class="section">
-    <div class="section-title"><span>📡 Recent Activity</span></div>
-    <div id="activity-log" style="max-height:200px;overflow-y:auto"></div>
+<div class="sec">
+<div class="sec-h"><span class="sec-t">📊 SEO Scorecard</span></div>
+<div class="seo-grid">
+<div><div class="seo-s" style="color:#ff4444">8</div><div class="seo-l">Performance</div></div>
+<div><div class="seo-s" style="color:#3fb950">85</div><div class="seo-l">SEO</div></div>
+<div><div class="seo-s" style="color:#ffd700">76</div><div class="seo-l">Accessibility</div></div>
 </div>
-
-
-<script>
-// Embedded status data - updated by Jarvis via git push
-const EMBEDDED_STATUS = {
-  "agents": [
-    {
-      "name": "Jarvis",
-      "role": "CEO / Orchestrator",
-      "model": "Claude Opus",
-      "status": "active",
-      "current_task": "SEO optimization + MiroFish simulations"
-    },
-    {
-      "name": "Scout",
-      "role": "Intelligence Analyst",
-      "model": "Claude Sonnet",
-      "status": "idle"
-    },
-    {
-      "name": "Sage",
-      "role": "Research Director",
-      "model": "Kimi K2.5",
-      "status": "idle"
-    },
-    {
-      "name": "Cipher",
-      "role": "CTO",
-      "model": "GPT 5.4",
-      "status": "active",
-      "current_task": "Adding citations to supplement guides"
-    },
-    {
-      "name": "Nova",
-      "role": "Content Strategist",
-      "model": "Claude Sonnet",
-      "status": "idle"
-    },
-    {
-      "name": "Ghost",
-      "role": "Security Monitor",
-      "model": "Kimi K2.5",
-      "status": "watching"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "omni-tier2-remaining",
-      "description": "Tier 2 remaining: refactor stock_alert, inventory_sync, daily_ad_pipeline, daily_product_sales, capture_il_snapshot, low_gp_report, update_ghost_prices, nightly_extraction to use shared libs",
-      "status": "pending",
-      "note": "8 scripts still using hardcoded Omni URL and duplicate fetch logic"
-    },
-    {
-      "id": "price-comparison-v2",
-      "description": "Price comparison: Top 50 vs F2N + WW. 10 WW matches found. F2N blocked by Cloudflare.",
-      "status": "blocked",
-      "blockedBy": "F2N Cloudflare protection. Need browser or Naadir to manually screenshot prices.",
-      "note": "10 WW matches: Onelife cheaper on 6/10, WW cheaper on 3 (Celtic Salt, Tri-Mag, Bio-Berberine)"
-    },
-    {
-      "id": "edenvale-ad",
-      "description": "Edenvale free delivery ad matching reference template",
-      "status": "waiting",
-      "note": "v5 delivered to Naadir. Awaiting feedback."
-    },
-    {
-      "id": "ghost-price-sync",
-      "description": "Update ghost product drafts with real Omni prices",
-      "status": "scheduled",
-      "cronId": "3ee7ab82-544f-4b29-b110-d0befd12d69c",
-      "note": "Cron shifted to 09:00. Still depends on Omni API being available."
-    },
-    {
-      "id": "onelife-login-fix",
-      "description": "Fix onelife.co.za login blank page on mobile",
-      "status": "blocked",
-      "blockedBy": "Naadir must disable 'Login with Shop' in Shopify Admin \u2192 Settings \u2192 Customer accounts",
-      "note": "data-login-with-shop-sign-in attribute causing redirect failure on mobile"
-    },
-    {
-      "id": "command-center-dashboard",
-      "description": "Build live auto-updating Command Center dashboard",
-      "status": "active",
-      "startedAt": "2026-03-17T03:37:00+02:00",
-      "note": "FastAPI on port 5050, GitHub Pages frontend auto-fetching every 60s"
-    },
-    {
-      "id": "seo-onelife",
-      "description": "SEO optimization for onelife.co.za",
-      "status": "active",
-      "note": "17 blog posts, 8397 image alts, 2108 product descriptions, 12 guide pages done"
-    }
-  ],
-  "recent_activity": [
-    "Theme template changes (lazy loading, scripts) still need explicit approval",
-    "\"U can fix\" \u2014 blanket approval for SEO fixes including theme settings",
-    "Awaiting Naadir's decision",
-    "Backend .env updated at MiroFish-Offline/.env",
-    "Patched run_parallel_simulation.py: `load_dotenv(override=True)` to prevent parent env leak",
-    "New Anthropic key: sk-ant-api03-AImX... (Naadir's \"simulation\" key, $16 balance)",
-    "Dashboard polls every 60s, offline fallback with cached data",
-    "Status file: `/Users/naadir/.openclaw/workspace/command-center/status.json`",
-    "API: port 5050, PID in `/Users/naadir/.openclaw/workspace/command-center/api.pid`",
-    "03:45 - Session Wrap-Up"
-  ],
-  "seo_status": {
-    "blog_posts": 17,
-    "image_alts": 8397,
-    "product_descriptions": 2108,
-    "guide_pages": 12,
-    "faq_schemas": 48,
-    "local_business_schemas": 3,
-    "performance_score": 8,
-    "seo_score": 85,
-    "accessibility_score": 76
-  },
-  "simulations": [
-    {
-      "name": "JaaS Market Simulation",
-      "model": "Sonnet 4",
-      "status": "completed",
-      "actions": 337,
-      "verdict": "GO - Price R3,999 tier hard"
-    },
-    {
-      "name": "Park View Emporium",
-      "model": "Sonnet 4",
-      "status": "completed",
-      "actions": 198,
-      "verdict": "CONDITIONAL GO - Breakeven R542K/month"
-    }
-  ],
-  "business_metrics": {
-    "monthly_revenue": "R1.3-1.4M",
-    "stores": 3,
-    "products": 4704,
-    "brands": 90
-  },
-  "last_updated": "2026-03-17T03:46:12.673484"
-};
-
-// Try API first, fall back to embedded data
-let currentData = EMBEDDED_STATUS;
-let isLive = false;
-
-async function fetchStatus() {
-    try {
-        // Try local network API (only works on same WiFi without HTTPS issue)
-        const controller = new AbortController();
-        setTimeout(() => controller.abort(), 3000);
-        const res = await fetch('http://192.168.68.58:5050/api/status', { signal: controller.signal });
-        if (res.ok) {
-            currentData = await res.json();
-            isLive = true;
-        }
-    } catch(e) {
-        // Use embedded data (still useful, just not live)
-        isLive = false;
-    }
-    renderDashboard(currentData, isLive);
-}
-
-function renderDashboard(data, live) {
-    // Update status indicator
-    const statusEl = document.getElementById('conn-status');
-    if (statusEl) {
-        statusEl.innerHTML = live ? 
-            '<span style="color:#00ff88">● Live</span>' : 
-            '<span style="color:#ffd700">● Cached (' + (data.last_updated || 'embedded') + ')</span>';
-    }
-    
-    // Agents
-    const agentsEl = document.getElementById('agents-grid');
-    const activeCount = (data.agents || []).filter(a => a.status === 'active').length;
-    document.getElementById('agents-count').textContent = activeCount + ' active';
-    if (agentsEl) {
-        agentsEl.innerHTML = (data.agents || []).map(a => `
-            <div style="background:#1a1a2e;border-radius:8px;padding:12px;border-left:3px solid ${a.status==='active'?'#00ff88':a.status==='watching'?'#ffd700':'#555'}">
-                <div style="font-weight:bold;color:#fff">${a.name}</div>
-                <div style="font-size:0.8em;color:#aaa">${a.role}</div>
-                <div style="font-size:0.75em;color:#888">${a.model}</div>
-                <div style="font-size:0.8em;color:${a.status==='active'?'#00ff88':a.status==='watching'?'#ffd700':'#555'};margin-top:4px">${a.status}</div>
-                ${a.current_task ? '<div style="font-size:0.75em;color:#aaa;margin-top:4px">'+a.current_task+'</div>' : ''}
-            </div>
-        `).join('');
-    }
-    
-    // Tasks
-    const tasksEl = document.getElementById('tasks-list');
-    document.getElementById('tasks-count').textContent = (data.tasks || []).length + ' tasks';
-    if (tasksEl) {
-        tasksEl.innerHTML = (data.tasks || []).map(t => `
-            <div style="background:#1a1a2e;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid ${t.status==='in_progress'?'#00ff88':t.status==='completed'?'#4488ff':'#ffd700'}">
-                <div style="color:#fff;font-size:0.9em">${t.name}</div>
-                <div style="color:#888;font-size:0.75em">${t.agent} · ${t.status}</div>
-            </div>
-        `).join('');
-    }
-    
-    // Simulations
-    const simsEl = document.getElementById('sims-list');
-    if (simsEl) {
-        simsEl.innerHTML = (data.simulations || []).map(s => `
-            <div style="background:#1a1a2e;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid ${s.status==='completed'?'#00ff88':'#ffd700'}">
-                <div style="color:#fff;font-size:0.9em">${s.name}</div>
-                <div style="color:#888;font-size:0.75em">${s.model} · ${s.actions} actions</div>
-                <div style="color:#00ff88;font-size:0.8em;margin-top:4px">${s.verdict}</div>
-            </div>
-        `).join('');
-    }
-    
-    // SEO
-    const seo = data.seo || {};
-    const seoEl = document.getElementById('seo-metrics');
-    if (seoEl) {
-        seoEl.innerHTML = `
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
-                <div><div style="font-size:1.5em;color:#ff4444;font-weight:bold">${seo.performance_score || 0}</div><div style="font-size:0.7em;color:#aaa">Performance</div></div>
-                <div><div style="font-size:1.5em;color:#00ff88;font-weight:bold">${seo.seo_score || 0}</div><div style="font-size:0.7em;color:#aaa">SEO</div></div>
-                <div><div style="font-size:1.5em;color:#ffd700;font-weight:bold">${seo.accessibility_score || 0}</div><div style="font-size:0.7em;color:#aaa">Accessibility</div></div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:12px;font-size:0.8em">
-                <div style="color:#aaa">Blog Posts: <span style="color:#fff">${seo.blog_posts || 0}</span></div>
-                <div style="color:#aaa">Image Alts: <span style="color:#fff">${(seo.image_alts||0).toLocaleString()}</span></div>
-                <div style="color:#aaa">Guides: <span style="color:#fff">${seo.guide_pages || 0}</span></div>
-                <div style="color:#aaa">FAQ Schemas: <span style="color:#fff">${seo.faq_schemas || 0}</span></div>
-                <div style="color:#aaa">Citations: <span style="color:#fff">${seo.citations || 60}</span></div>
-                <div style="color:#aaa">Local Schemas: <span style="color:#fff">${seo.local_business_schemas || 0}</span></div>
-            </div>
-        `;
-    }
-    
-    // Business metrics
-    const biz = data.business_metrics || {};
-    document.getElementById('metric-revenue').textContent = biz.monthly_revenue || '-';
-    document.getElementById('metric-stores').textContent = biz.stores || '-';
-    document.getElementById('metric-products').textContent = (biz.products||0).toLocaleString();
-    document.getElementById('metric-brands').textContent = biz.brands || '-';
-    
-    // Activity
-    const actEl = document.getElementById('activity-log');
-    if (actEl) {
-        actEl.innerHTML = (data.recent_activity || []).map(a => `
-            <div style="padding:6px 0;border-bottom:1px solid #222;font-size:0.8em">
-                <span style="color:#00ff88">${a.time || ''}</span> <span style="color:#ddd">${a.activity || ''}</span>
-            </div>
-        `).join('');
-    }
-}
-
-// Initial render
-fetchStatus();
-// Refresh every 60s
-setInterval(fetchStatus, 60000);
-</script>
-
+<div class="seo-st">
+<div><span>Blog Posts: </span><strong>17</strong></div>
+<div><span>Image Alts: </span><strong>8,397</strong></div>
+<div><span>Guide Pages: </span><strong>12</strong></div>
+<div><span>FAQ Schemas: </span><strong>48</strong></div>
+<div><span>Citations: </span><strong>60</strong></div>
+<div><span>Local Schemas: </span><strong>3</strong></div>
+</div>
+</div>
+<div class="ft">Onelife Intelligence · Paperclip v0.3.1 · 2026-03-17T04:18:12</div>
 </body>
 </html>
