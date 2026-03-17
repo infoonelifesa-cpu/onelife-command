@@ -1,92 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Onelife Command Center</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:12px;max-width:800px;margin:0 auto}
-.header{text-align:center;padding:20px 0 12px}
-.header h1{color:#00ff88;font-size:1.4em}
-.header .sub{color:#7d8590;font-size:0.8em;margin-top:4px}
-.header .src{color:#3fb950;font-size:0.7em;margin-top:6px;font-family:monospace}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.kpi{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 8px;text-align:center}
-.kpi-v{font-size:1.3em;font-weight:700;color:#00ff88}
-.kpi-l{font-size:0.65em;color:#7d8590;text-transform:uppercase;margin-top:4px}
-.sec{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;margin:10px 0}
-.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.sec-t{color:#e6edf3;font-size:0.9em;font-weight:600}
-.badge{background:#21262d;color:#7d8590;font-size:0.7em;padding:2px 8px;border-radius:10px}
-.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media(max-width:600px){.ag{grid-template-columns:repeat(2,1fr)}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-.agent-card{background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #555}
-.agent-name{font-weight:700;font-size:0.9em}
-.agent-role{font-size:0.7em;color:#7d8590}
-.agent-model{font-size:0.65em;color:#484f58;margin-top:2px}
-.agent-status{font-size:0.75em;margin-top:4px}
-.project-card{display:inline-flex;align-items:center;gap:6px;background:#0d1117;border-radius:6px;padding:6px 10px;margin:0 6px 6px 0;font-size:0.8em}
-.project-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-.issue-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em}
-.issue-key{color:#3fb950;font-family:monospace;font-size:0.85em;min-width:50px}
-.issue-title{flex:1}
-.sim-card{background:#0d1117;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid #3fb950}
-.sim-name{font-weight:600;font-size:0.85em}
-.sim-meta{font-size:0.7em;color:#7d8590}
-.sim-verdict{font-size:0.75em;color:#3fb950;margin-top:4px}
-.seo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px}
-.seo-s{font-size:1.5em;font-weight:700}
-.seo-l{font-size:0.65em;color:#7d8590}
-.seo-st{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:0.8em}
-.seo-st span{color:#7d8590}.seo-st strong{color:#e6edf3}
-.ft{text-align:center;color:#484f58;font-size:0.65em;padding:16px 0}
-</style>
-</head>
-<body>
-<div class="header">
-<h1>⚡ Onelife Command Center</h1>
-<div class="sub">Powered by Paperclip · Onelife Intelligence</div>
-<div class="src">paperclip:3100 · 2026-03-17T04:18</div>
-</div>
-<div class="kpi-grid">
-<div class="kpi"><div class="kpi-v">R1.3-1.4M</div><div class="kpi-l">Revenue</div></div>
-<div class="kpi"><div class="kpi-v">3</div><div class="kpi-l">Stores</div></div>
-<div class="kpi"><div class="kpi-v">4,704</div><div class="kpi-l">Products</div></div>
-<div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">Open Tasks</div></div>
-</div>
-<div class="sec">
-<div class="sec-h"><span class="sec-t">🤖 Agent Team</span><span class="badge">6 agents</span></div>
-<div class="ag"><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Jarvis</div><div class="agent-role">CEO / Orchestrator</div><div class="agent-model">Claude Opus</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Scout</div><div class="agent-role">Intelligence</div><div class="agent-model">Claude Sonnet</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Sage</div><div class="agent-role">Intelligence</div><div class="agent-model">Kimi K2.5</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Cipher</div><div class="agent-role">CTO / Engineering</div><div class="agent-model">GPT 5.4</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Nova</div><div class="agent-role">Content & Marketing</div><div class="agent-model">Claude Sonnet</div><div class="agent-status" style="color:#555">● idle</div></div><div class="agent-card" style="border-left-color:#555"><div class="agent-name">Ghost</div><div class="agent-role">Security & Ops</div><div class="agent-model">Kimi K2.5</div><div class="agent-status" style="color:#555">● idle</div></div></div>
-</div>
-<div class="sec">
-<div class="sec-h"><span class="sec-t">📁 Projects</span><span class="badge">3 active</span></div>
-<div><div class="project-card"><span class="project-dot" style="background:#6366f1"></span><span>Expand Onelife</span></div><div class="project-card"><span class="project-dot" style="background:#8b5cf6"></span><span>Polymarket Trading</span></div><div class="project-card"><span class="project-dot" style="background:#f59e0b"></span><span>JARVIS AI</span></div></div>
-</div>
-<div class="sec">
-<div class="sec-h"><span class="sec-t">📋 Tasks</span><span class="badge">17 open · 0 in progress · 0 done</span></div>
-<div><div class="issue-row"><span class="issue-key">ONE-9</span><span class="issue-title">V3 bot: validate maker arb during US hours</span><span style="color:#ff4444">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-15</span><span class="issue-title">Write Onelife case study</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-14</span><span class="issue-title">Build landing page (jarvis.co.za or similar)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-11</span><span class="issue-title">Research maker order rebate optimization</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-10</span><span class="issue-title">Implement auto-claim for resolved markets</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-6</span><span class="issue-title">Biweekly TikTok content batch</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-2</span><span class="issue-title">Weekly SEO report (GA4 + GSC)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-18</span><span class="issue-title">Set up Paperclip for multi-tenant deployment</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-17</span><span class="issue-title">Research SA market for AI services</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-16</span><span class="issue-title">Create sample intelligence report</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-13</span><span class="issue-title">Investigate sponsored reward farming viability</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-12</span><span class="issue-title">Build fee calculator with real CLOB data</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-5</span><span class="issue-title">Weekly competitor pricing scan</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-4</span><span class="issue-title">Fix 73 ghost/draft products</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-3</span><span class="issue-title">Write remaining blog posts (Menopause, Liver, Joint, Iron)</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-8</span><span class="issue-title">Verify Supplement Guides nav after CDN clear</span><span style="color:#888">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div><div class="issue-row"><span class="issue-key">ONE-7</span><span class="issue-title">Submit remaining 2 guide URLs to GSC</span><span style="color:#888">●</span><span style="color:#484f58;font-style:italic;font-size:0.75em">unassigned</span></div></div>
-</div>
-<div class="sec">
-<div class="sec-h"><span class="sec-t">🧪 MiroFish Simulations</span></div>
-<div class="sim-card"><div class="sim-name">JaaS Market Simulation</div><div class="sim-meta">Sonnet 4 · 337 actions</div><div class="sim-verdict">GO - Price R3,999 tier hard</div></div><div class="sim-card"><div class="sim-name">Park View Emporium</div><div class="sim-meta">Sonnet 4 · 198 actions</div><div class="sim-verdict">CONDITIONAL GO - Breakeven R542K/month</div></div>
-</div>
-<div class="sec">
-<div class="sec-h"><span class="sec-t">📊 SEO Scorecard</span></div>
-<div class="seo-grid">
-<div><div class="seo-s" style="color:#ff4444">8</div><div class="seo-l">Performance</div></div>
-<div><div class="seo-s" style="color:#3fb950">85</div><div class="seo-l">SEO</div></div>
-<div><div class="seo-s" style="color:#ffd700">76</div><div class="seo-l">Accessibility</div></div>
-</div>
-<div class="seo-st">
-<div><span>Blog Posts: </span><strong>17</strong></div>
-<div><span>Image Alts: </span><strong>8,397</strong></div>
-<div><span>Guide Pages: </span><strong>12</strong></div>
-<div><span>FAQ Schemas: </span><strong>48</strong></div>
-<div><span>Citations: </span><strong>60</strong></div>
-<div><span>Local Schemas: </span><strong>3</strong></div>
-</div>
-</div>
-<div class="ft">Onelife Intelligence · Paperclip v0.3.1 · 2026-03-17T04:18:12</div>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Onelife Command Center</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:12px;max-width:800px;margin:0 auto}.hdr{text-align:center;padding:20px 0 12px}.hdr h1{color:#00ff88;font-size:1.4em}.hdr .sub{color:#7d8590;font-size:0.8em;margin-top:4px}.hdr .src{color:#3fb950;font-size:0.7em;margin-top:6px;font-family:monospace}.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.k{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 8px;text-align:center}.kv{font-size:1.3em;font-weight:700;color:#00ff88}.kl{font-size:0.65em;color:#7d8590;text-transform:uppercase;margin-top:4px}.sec{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;margin:10px 0}.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.st{color:#e6edf3;font-size:0.9em;font-weight:600}.badge{background:#21262d;color:#7d8590;font-size:0.7em;padding:2px 8px;border-radius:10px}.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(max-width:600px){.ag{grid-template-columns:repeat(2,1fr)}.kpi{grid-template-columns:repeat(2,1fr)}}.ft{text-align:center;color:#484f58;font-size:0.65em;padding:16px 0}</style></head><body>
+<div class="hdr"><h1>⚡ Onelife Command Center</h1><div class="sub">Powered by Paperclip · Onelife Intelligence</div><div class="src">paperclip:3100 · 2026-03-17T15:01</div></div>
+<div class="kpi"><div class="k"><div class="kv">R1.3-1.4M</div><div class="kl">Revenue</div></div><div class="k"><div class="kv">3</div><div class="kl">Stores</div></div><div class="k"><div class="kv">4,704</div><div class="kl">Products</div></div><div class="k"><div class="kv">4</div><div class="kl">Done Today</div></div></div>
+<div class="sec"><div class="sh"><span class="st">🤖 Agent Team</span><span class="badge">3 active</span></div><div class="ag"><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #00ff88">
+<div style="font-weight:700;font-size:0.9em">Jarvis</div>
+<div style="font-size:0.7em;color:#7d8590">CEO / Orchestrator</div>
+<div style="font-size:0.65em;color:#484f58">Claude Opus</div>
+<div style="font-size:0.75em;color:#00ff88;margin-top:4px">● active</div>
+<div style="font-size:0.7em;color:#aaa;margin-top:4px">Coordinating GLP-1 bundle launch</div></div><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #555">
+<div style="font-weight:700;font-size:0.9em">Scout</div>
+<div style="font-size:0.7em;color:#7d8590">Intelligence Analyst</div>
+<div style="font-size:0.65em;color:#484f58">Claude Sonnet</div>
+<div style="font-size:0.75em;color:#555;margin-top:4px">● idle</div>
+</div><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #555">
+<div style="font-weight:700;font-size:0.9em">Sage</div>
+<div style="font-size:0.7em;color:#7d8590">Research Director</div>
+<div style="font-size:0.65em;color:#484f58">Kimi K2.5</div>
+<div style="font-size:0.75em;color:#555;margin-top:4px">● idle</div>
+</div><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #00ff88">
+<div style="font-weight:700;font-size:0.9em">Cipher</div>
+<div style="font-size:0.7em;color:#7d8590">CTO / Engineering</div>
+<div style="font-size:0.65em;color:#484f58">GPT 5.4</div>
+<div style="font-size:0.75em;color:#00ff88;margin-top:4px">● active</div>
+<div style="font-size:0.7em;color:#aaa;margin-top:4px">Building GLP-1 Shopify collection + guide + blog</div></div><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #00ff88">
+<div style="font-weight:700;font-size:0.9em">Nova</div>
+<div style="font-size:0.7em;color:#7d8590">Content Strategist</div>
+<div style="font-size:0.65em;color:#484f58">Claude Sonnet</div>
+<div style="font-size:0.75em;color:#00ff88;margin-top:4px">● active</div>
+<div style="font-size:0.7em;color:#aaa;margin-top:4px">Writing 3 Klaviyo GLP-1 email campaigns</div></div><div style="background:#0d1117;border-radius:8px;padding:10px;border-left:3px solid #ffd700">
+<div style="font-weight:700;font-size:0.9em">Ghost</div>
+<div style="font-size:0.7em;color:#7d8590">Security & Ops</div>
+<div style="font-size:0.65em;color:#484f58">Kimi K2.5</div>
+<div style="font-size:0.75em;color:#ffd700;margin-top:4px">● watching</div>
+</div></div></div>
+<div class="sec"><div class="sh"><span class="st">📁 Projects</span><span class="badge">3 active</span></div><div><span style="display:inline-flex;align-items:center;gap:6px;background:#0d1117;border-radius:6px;padding:6px 10px;margin:0 6px 6px 0;font-size:0.8em"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#6366f1"></span>Expand Onelife</span><span style="display:inline-flex;align-items:center;gap:6px;background:#0d1117;border-radius:6px;padding:6px 10px;margin:0 6px 6px 0;font-size:0.8em"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#8b5cf6"></span>Polymarket Trading</span><span style="display:inline-flex;align-items:center;gap:6px;background:#0d1117;border-radius:6px;padding:6px 10px;margin:0 6px 6px 0;font-size:0.8em"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#f59e0b"></span>JARVIS AI</span></div></div>
+<div class="sec"><div class="sh"><span class="st">📋 Tasks</span><span class="badge">0 active · 19 backlog · 4 done</span></div><div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-24</span><span style="flex:1">Klaviyo GLP-1 Email Campaigns (3 emails)</span><span style="color:#ff4444">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-23</span><span style="flex:1">GLP-1 Shopify Build</span><span style="color:#ff4444">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-9</span><span style="flex:1">V3 bot: validate maker arb during US hours</span><span style="color:#ff4444">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-15</span><span style="flex:1">Write Onelife case study</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-14</span><span style="flex:1">Build landing page (jarvis.co.za or similar)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-11</span><span style="flex:1">Research maker order rebate optimization</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-10</span><span style="flex:1">Implement auto-claim for resolved markets</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-6</span><span style="flex:1">Biweekly TikTok content batch</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-2</span><span style="flex:1">Weekly SEO report (GA4 + GSC)</span><span style="color:#ff8800">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-18</span><span style="flex:1">Set up Paperclip for multi-tenant deployment</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-17</span><span style="flex:1">Research SA market for AI services</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-16</span><span style="flex:1">Create sample intelligence report</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-13</span><span style="flex:1">Investigate sponsored reward farming viability</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-12</span><span style="flex:1">Build fee calculator with real CLOB data</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;font-size:0.8em"><span style="color:#3fb950;font-family:monospace;min-width:50px">ONE-5</span><span style="flex:1">Weekly competitor pricing scan</span><span style="color:#ffd700">●</span><span style="color:#484f58;font-size:0.75em">backlog</span></div></div></div>
+<div class="sec"><div class="sh"><span class="st">🧪 MiroFish Simulations</span></div><div style="background:#0d1117;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid #3fb950"><div style="font-weight:600;font-size:0.85em">JaaS Market Simulation</div><div style="font-size:0.7em;color:#7d8590">Sonnet 4 · 337 actions</div><div style="font-size:0.75em;color:#3fb950;margin-top:4px">GO - Price sensitivity at R3,999 tier</div></div><div style="background:#0d1117;border-radius:6px;padding:10px;margin-bottom:6px;border-left:3px solid #3fb950"><div style="font-weight:600;font-size:0.85em">Park View Emporium</div><div style="font-size:0.7em;color:#7d8590">Sonnet 4 · 198 actions</div><div style="font-size:0.75em;color:#3fb950;margin-top:4px">CONDITIONAL GO - Breakeven R542K/month</div></div></div>
+<div class="sec"><div class="sh"><span class="st">📊 SEO Scorecard</span></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px"><div><div style="font-size:1.5em;font-weight:700;color:#ff4444">8</div><div style="font-size:0.65em;color:#7d8590">Performance</div></div><div><div style="font-size:1.5em;font-weight:700;color:#3fb950">85</div><div style="font-size:0.65em;color:#7d8590">SEO</div></div><div><div style="font-size:1.5em;font-weight:700;color:#ffd700">76</div><div style="font-size:0.65em;color:#7d8590">Accessibility</div></div></div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:0.8em"><div><span style="color:#7d8590">Guides: </span><strong>12</strong></div><div><span style="color:#7d8590">Citations: </span><strong>60</strong></div><div><span style="color:#7d8590">FAQ Schemas: </span><strong>48</strong></div><div><span style="color:#7d8590">Blog Posts: </span><strong>17</strong></div></div></div>
+<div class="ft">Onelife Intelligence · Paperclip · 2026-03-17T15:01</div></body></html>
