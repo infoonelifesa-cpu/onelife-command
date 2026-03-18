@@ -17,6 +17,10 @@ TARGETS = {"HO": 1450000, "EDN": 450000, "GVS": 330000}
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE = os.path.expanduser("~/.openclaw/workspace")
 
+REPORTS = {"HO": "Daily Turnover One Life", "GVS": "Daily Turnover GVS", "EDN": "Daily Turnover EDEN"}
+# Trading days per month: CEN closed Sundays (26), GVS+EDN open 7 days (31)
+TRADING_DAYS = {"HO": 26, "GVS": 31, "EDN": 31}
+
 def omni_get(path, timeout=60):
     """GET from Omni API with auth."""
     sep = "&" if "?" in path else "?"
@@ -29,21 +33,35 @@ def omni_get(path, timeout=60):
         return {"error": str(e)}
 
 def get_mtd_sales():
-    """Pull MTD sales from Omni Report endpoint."""
+    """Pull MTD sales from Omni Daily Turnover reports. All figures excl VAT."""
     now = datetime.now(SAST)
-    start = now.replace(day=1).strftime("%Y-%m-%dT00:00:00")
-    end = now.strftime("%Y-%m-%dT23:59:59")
+    month_prefix = now.strftime("%Y-%m")
     results = {}
     for branch, name in BRANCHES.items():
-        data = omni_get(f"/Report/ANA_DailySales?Branch={branch}&FromDate={start}&ToDate={end}", timeout=120)
-        if isinstance(data, list) and data:
-            total = sum(float(row.get("TotalExcl", row.get("total_excl", 0))) for row in data)
-            days = len(set(row.get("Date", row.get("date", ""))[:10] for row in data if row.get("Date") or row.get("date")))
-            results[branch] = {"name": name, "mtd": round(total), "days": max(days, 1), "target": TARGETS.get(branch, 0)}
-        elif isinstance(data, dict) and "error" in data:
-            results[branch] = {"name": name, "mtd": 0, "days": 0, "target": TARGETS.get(branch, 0), "error": data["error"]}
+        report = REPORTS.get(branch, "")
+        data = omni_get(f"/Report/{urllib.parse.quote(report)}", timeout=120)
+        
+        if isinstance(data, dict) and not data.get("error"):
+            # Response is nested: {"daily_turnover_xxx": [...]}
+            key = next(iter(data), None)
+            records = data[key] if key and isinstance(data[key], list) else []
+        elif isinstance(data, list):
+            records = data
         else:
-            results[branch] = {"name": name, "mtd": 0, "days": 0, "target": TARGETS.get(branch, 0)}
+            results[branch] = {"name": name, "mtd": 0, "days": 0, "target": TARGETS.get(branch, 0), 
+                             "trading_days": TRADING_DAYS.get(branch, 30), "error": data.get("error", "Unknown")}
+            continue
+        
+        march = [r for r in records if r.get("document_date", "").startswith(month_prefix)]
+        total = sum(float(r.get("value_excl_after_discount", 0)) for r in march)
+        gp = sum(float(r.get("gross_profit", 0)) for r in march)
+        days = len(set(r.get("document_date", "")[:10] for r in march))
+        
+        results[branch] = {
+            "name": name, "mtd": round(total), "gp": round(gp), 
+            "days": max(days, 1), "target": TARGETS.get(branch, 0),
+            "trading_days": TRADING_DAYS.get(branch, 30)
+        }
     return results
 
 def load_tasks():
@@ -101,23 +119,33 @@ def generate():
     pending_tasks = [t for t in tasks if t.get("status") == "pending"]
     done_tasks = [t for t in tasks if t.get("status") == "done"]
     
-    # Store cards
+    # Store cards with GP and projection
     store_cards = ""
     for branch in ["HO", "EDN", "GVS"]:
         s = sales.get(branch, {})
         mtd = s.get("mtd", 0)
+        gp = s.get("gp", 0)
         target = s.get("target", 0)
+        days = s.get("days", 1)
+        trading_days = s.get("trading_days", 30)
         pct = round(mtd / target * 100) if target else 0
-        pace_color = "#22c55e" if pct >= (now.day / 30 * 100) else "#ef4444"
+        daily_avg = mtd / days if days else 0
+        remaining_days = max(trading_days - days, 0)
+        projected = mtd + (daily_avg * remaining_days)
+        gp_pct = round(gp / mtd * 100, 1) if mtd else 0
+        on_track = projected >= target
+        pace_color = "#22c55e" if on_track else "#ef4444"
+        pace_label = "On track" if on_track else f"Need {fmt_money((target - mtd) / max(remaining_days, 1))}/day"
         err = s.get("error", "")
         status_dot = "🔴" if err else "🟢"
         store_cards += f'''
         <div class="store-card">
             <div class="store-name">{status_dot} {s.get("name", branch)}</div>
             <div class="store-mtd">{fmt_money(mtd)}</div>
-            <div class="store-target">of {fmt_money(target)} target</div>
+            <div class="store-target">of {fmt_money(target)} target · {days} days</div>
             <div class="store-bar"><div class="store-fill" style="width:{min(pct,100)}%;background:{pace_color}"></div></div>
-            <div class="store-pct" style="color:{pace_color}">{pct}%</div>
+            <div class="store-pct" style="color:{pace_color}">{pct}% · {pace_label}</div>
+            <div style="font-size:0.65em;color:#737373;margin-top:4px">GP: {fmt_money(gp)} ({gp_pct}%) · Proj: {fmt_money(round(projected))}</div>
         </div>'''
     
     # Task rows
