@@ -1,180 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Onelife Command Center</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta http-equiv="refresh" content="1800"><title>🦞 Jarvis Command Center</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:12px;max-width:900px;margin:0 auto}
-.hdr{text-align:center;padding:20px 0 12px;border-bottom:1px solid #262626;margin-bottom:16px}
-.hdr h1{color:#00ff88;font-size:1.5em}
-.hdr .sub{color:#737373;font-size:0.75em;margin-top:4px}
-.hdr .ts{color:#525252;font-size:0.65em;margin-top:6px;font-family:monospace}
-.omni-status{text-align:center;font-size:0.7em;margin:8px 0;padding:4px 12px;border-radius:6px;display:inline-block}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.k{background:#171717;border:1px solid #262626;border-radius:10px;padding:14px 8px;text-align:center}
-.kv{font-size:1.5em;font-weight:700;color:#00ff88}
-.kl{font-size:0.6em;color:#737373;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-.sec{background:#171717;border:1px solid #262626;border-radius:10px;padding:14px;margin:12px 0}
-.sh{font-weight:600;font-size:0.95em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #262626}
-.stores{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.store-card{background:#0d1117;border-radius:8px;padding:12px;text-align:center}
-.store-name{font-weight:600;font-size:0.85em;margin-bottom:6px}
-.store-mtd{font-size:1.4em;font-weight:700;color:#e5e5e5}
-.store-target{font-size:0.65em;color:#737373;margin:2px 0 8px}
-.store-bar{background:#262626;border-radius:4px;height:6px;overflow:hidden}
-.store-fill{height:100%;border-radius:4px;transition:width 0.5s}
-.store-pct{font-size:0.8em;font-weight:700;margin-top:4px}
-.seo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.seo-item{background:#0d1117;border-radius:8px;padding:10px;text-align:center}
-.seo-num{font-size:1.2em;font-weight:700;color:#6366f1}
-.seo-label{font-size:0.6em;color:#737373;margin-top:2px}
-table{width:100%;border-collapse:collapse;font-size:0.8em}
-th{text-align:left;font-size:0.65em;color:#737373;text-transform:uppercase;padding:8px 6px;border-bottom:1px solid #262626}
-td{padding:8px 6px;border-bottom:1px solid #1a1a1a}
-.task-desc{max-width:400px}
-.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.65em;font-weight:600;color:#fff}
-.cron-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
-.cron-label{font-size:0.8em;color:#aaa}
-.cron-val{font-size:0.8em;font-weight:600}
-.ft{text-align:center;color:#404040;font-size:0.6em;padding:16px 0}
-@media(max-width:600px){
-  .kpi{grid-template-columns:repeat(2,1fr)}
-  .stores{grid-template-columns:1fr}
-  .seo-grid{grid-template-columns:repeat(2,1fr)}
-  table{font-size:0.7em}
-  td,th{padding:6px 4px}
-  .task-desc{max-width:200px}
-}
-</style>
-</head>
-<body>
-<div class="hdr">
-  <h1>🦞 Onelife Command Center</h1>
-  <div class="sub">Omni · Shopify · Klaviyo · GA4</div>
-  <div class="ts">Updated: 18 Mar 2026, 19:35 SAST</div>
-  <div class="omni-status" style="background:#0f3d0f; color:#22c55e">
-    Omni: ● Connected
-  </div>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#111318;--bg3:#161a22;--bg4:#1c2130;--bd:#252b38;--bd2:#2e3650;--t1:#e8eaf0;--t2:#8892a4;--t3:#50596a;--ok:#22c55e;--wn:#f59e0b;--er:#ef4444;--id:#6b7280;--ac:#6366f1;--ac2:#22d3ee;--okb:rgba(34,197,94,.1);--wnb:rgba(245,158,11,.1);--erb:rgba(239,68,68,.1);--idb:rgba(107,114,128,.1);--acg:rgba(99,102,241,.15);--r:10px;--fm:'SF Mono',monospace;--fs:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif}
+body{font-family:var(--fs);background:var(--bg);color:var(--t1);min-height:100vh;line-height:1.5}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(10,12,16,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:0 20px}
+.hdr-in{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:54px}
+.brand{display:flex;align-items:center;gap:10px}.brand-logo{font-size:22px}.brand-t{font-size:15px;font-weight:700}.brand-s{font-size:11px;color:var(--t3);font-family:var(--fm);letter-spacing:.05em;text-transform:uppercase}
+.hdr-meta{display:flex;align-items:center;gap:10px}.clock{font-family:var(--fm);font-size:12px;color:var(--t2)}.rpill{font-size:10px;padding:2px 8px;background:var(--acg);border:1px solid var(--ac);border-radius:20px;color:var(--ac);font-family:var(--fm)}
+.main{max-width:1400px;margin:0 auto;padding:24px 20px 60px}
+.sl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;gap:8px}.sl::after{content:'';flex:1;height:1px;background:var(--bd)}
+.banner{background:var(--acg);border:1px solid rgba(99,102,241,.3);border-radius:var(--r);padding:10px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--t2);flex-wrap:wrap}.banner strong{color:var(--t1)}
+.hg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:32px}
+.hc{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.hc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px}
+.hc.ok::before{background:var(--ok)}.hc.wn::before{background:var(--wn)}.hc.er::before{background:var(--er)}
+.hi{font-size:22px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+.hc.ok .hi{background:var(--okb)}.hc.wn .hi{background:var(--wnb)}.hc.er .hi{background:var(--erb)}
+.hn{font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.hs{font-size:15px;font-weight:700;margin-top:1px}.hc.ok .hs{color:var(--ok)}.hc.wn .hs{color:var(--wn)}.hc.er .hs{color:var(--er)}
+.hd{font-size:10px;color:var(--t3);font-family:var(--fm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}@media(max-width:860px){.mg{grid-template-columns:1fr}}
+.pnl{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.ph{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pt{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.chips{display:flex;gap:5px}.chip{font-family:var(--fm);font-size:10px;padding:2px 8px;border-radius:20px;background:var(--bg);border:1px solid var(--bd);color:var(--t2)}
+.chip.ok{border-color:rgba(34,197,94,.4);color:var(--ok)}.chip.er{border-color:rgba(239,68,68,.4);color:var(--er)}
+.pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-family:var(--fm)}
+.pill.ok{background:var(--okb);color:var(--ok);border:1px solid rgba(34,197,94,.3)}
+.pill.er{background:var(--erb);color:var(--er);border:1px solid rgba(239,68,68,.3)}
+.pill.wn{background:var(--wnb);color:var(--wn);border:1px solid rgba(245,158,11,.3)}
+.pill.dn{background:rgba(99,102,241,.12);color:var(--ac);border:1px solid rgba(99,102,241,.3)}
+.pill.pn{background:var(--wnb);color:var(--wn);border:1px solid rgba(245,158,11,.3)}
+ul{list-style:none}
+.ci{padding:11px 16px;border-bottom:1px solid var(--bd);display:grid;grid-template-columns:8px 1fr auto;gap:0 12px;align-items:start;transition:background .15s}
+.ci:last-child{border-bottom:none}.ci:hover{background:var(--bg4)}
+.cd{width:8px;height:8px;border-radius:50%;margin-top:5px}.cd.ok{background:var(--ok);box-shadow:0 0 5px var(--ok)}.cd.er{background:var(--er);box-shadow:0 0 5px var(--er)}.cd.id{background:var(--id)}
+.cn{font-size:13px;font-weight:600;line-height:1.3}.cs{font-family:var(--fm);font-size:10px;color:var(--t3);margin-top:1px}.cm{font-size:10px;color:var(--ac2);margin-top:1px;font-family:var(--fm)}
+.ct{text-align:right;min-width:88px}.cr{font-size:11px;font-family:var(--fm);color:var(--t2);display:flex;align-items:center;justify-content:flex-end;gap:4px}
+.cl{font-size:9px;text-transform:uppercase;color:var(--t3);opacity:.65}.cnx{color:var(--ac2)}.cls{color:var(--t2)}
+.ti{padding:11px 16px;border-bottom:1px solid var(--bd);transition:background .15s}.ti:last-child{border-bottom:none}.ti:hover{background:var(--bg4)}
+.th{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.tn{font-size:13px;font-weight:600;line-height:1.35;flex:1}.tn.done{text-decoration:line-through;opacity:.5}
+.tb{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.pri{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-family:var(--fm)}
+.pri.H{background:rgba(239,68,68,.12);color:#fc8181;border:1px solid rgba(239,68,68,.25)}
+.pri.M{background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+.pri.L{background:rgba(107,114,128,.12);color:var(--id);border:1px solid rgba(107,114,128,.25)}
+.tnt{font-size:11px;color:var(--t3);margin-top:4px;line-height:1.45}
+@keyframes pulse{0%{transform:scale(.8);opacity:.8}70%{transform:scale(2);opacity:0}100%{transform:scale(2);opacity:0}}
+.pu{position:relative;display:inline-flex;align-items:center;justify-content:center;width:12px;height:12px}
+.pu::before{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.8s ease-out infinite}
+.pc{width:8px;height:8px;border-radius:50%;background:var(--ok);position:relative;z-index:1}
+.gd{height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);margin:24px 0;opacity:.25}
+.footer{text-align:center;padding:20px;font-size:11px;color:var(--t3);font-family:var(--fm);border-top:1px solid var(--bd);margin-top:16px}
+@media(max-width:480px){.brand-s{display:none}.main{padding:16px 12px 32px}.ci{grid-template-columns:6px 1fr;gap:0 8px}.ct{display:none}}
+</style></head><body>
+
+<header class="hdr"><div class="hdr-in">
+<div class="brand"><span class="brand-logo">🦞</span><div><div class="brand-t">Jarvis Command Center</div><div class="brand-s">Mission Control · Onelife Health</div></div></div>
+<div class="hdr-meta"><div class="clock" id="clk"></div><span class="rpill">⟳ 30min</span></div>
+</div></header>
+
+<main class="main">
+
+<div class="banner"><span style="font-size:16px">📡</span><span>Snapshot: <strong>Wed 18 Mar 2026, 19:46 SAST</strong> · <strong>15 cron jobs</strong> scheduled · <strong>6 active</strong>, 3 pending, 3 done · Auto-refreshes every 30 min</span></div>
+
+<div class="sl">⚡ System Health</div>
+<div class="hg">
+<div class="hc ok"><div class="hi">🌐</div><div><div class="hn">Gateway</div><div class="hs">Online</div><div class="hd">127.0.0.1:18789 · pid 72177</div></div></div>
+<div class="hc ok"><div class="hi">🏪</div><div><div class="hn">Omni API</div><div class="hs">Reachable</div><div class="hd">102.22.82.27:59029 · HTTP 200</div></div></div>
+<div class="hc ok"><div class="hi">🍌</div><div><div class="hn">Nano Banana Pro</div><div class="hs">Available</div><div class="hd">gemini-3-pro-image-preview</div></div></div>
+<div class="hc ok"><div class="hi">🤖</div><div><div class="hn">Cron Engine</div><div class="hs">Running</div><div class="hd">15 jobs · 14 ok · 1 error</div></div></div>
+<div class="hc wn"><div class="hi">⚠️</div><div><div class="hn">Conversion Report</div><div class="hs">Failing</div><div class="hd">Weekly cron error · needs debug</div></div></div>
+<div class="hc ok"><div class="hi">🏨</div><div><div class="hn">Hilton Scanner</div><div class="hs">Active</div><div class="hd">hilton.scanserver · LaunchAgent</div></div></div>
 </div>
 
-<div class="kpi">
-  <div class="k"><div class="kv">R1.2M</div><div class="kl">MTD Revenue</div></div>
-  <div class="k"><div class="kv">R2.2M</div><div class="kl">Monthly Target</div></div>
-  <div class="k"><div class="kv">6</div><div class="kl">Active Tasks</div></div>
-  <div class="k"><div class="kv" style="color:#ef4444">13/15</div><div class="kl">Crons OK</div></div>
-</div>
+<div class="gd"></div>
 
-<div class="sec">
-  <div class="sh">📊 Store Performance (MTD excl VAT)</div>
-  <div class="stores">
-        <div class="store-card">
-            <div class="store-name">🟢 Centurion</div>
-            <div class="store-mtd">R794k</div>
-            <div class="store-target">of R1.4M target · 15 days</div>
-            <div class="store-bar"><div class="store-fill" style="width:55%;background:#ef4444"></div></div>
-            <div class="store-pct" style="color:#ef4444">55% · Need R60k/day</div>
-            <div style="font-size:0.65em;color:#737373;margin-top:4px">GP: R269k (33.8%) · Proj: R1.4M</div>
-        </div>
-        <div class="store-card">
-            <div class="store-name">🟢 Edenvale</div>
-            <div class="store-mtd">R233k</div>
-            <div class="store-target">of R450k target · 18 days</div>
-            <div class="store-bar"><div class="store-fill" style="width:52%;background:#ef4444"></div></div>
-            <div class="store-pct" style="color:#ef4444">52% · Need R17k/day</div>
-            <div style="font-size:0.65em;color:#737373;margin-top:4px">GP: R81k (34.6%) · Proj: R401k</div>
-        </div>
-        <div class="store-card">
-            <div class="store-name">🟢 Glen Village</div>
-            <div class="store-mtd">R208k</div>
-            <div class="store-target">of R330k target · 18 days</div>
-            <div class="store-bar"><div class="store-fill" style="width:63%;background:#22c55e"></div></div>
-            <div class="store-pct" style="color:#22c55e">63% · On track</div>
-            <div style="font-size:0.65em;color:#737373;margin-top:4px">GP: R70k (33.8%) · Proj: R358k</div>
-        </div></div>
-</div>
+<div class="mg">
 
-<div class="sec">
-  <div class="sh">🔍 SEO Progress</div>
-  <div class="seo-grid">
-    <div class="seo-item"><div class="seo-num">17</div><div class="seo-label">Blog Posts</div></div>
-    <div class="seo-item"><div class="seo-num">8k</div><div class="seo-label">Image Alts</div></div>
-    <div class="seo-item"><div class="seo-num">2k</div><div class="seo-label">Descriptions</div></div>
-    <div class="seo-item"><div class="seo-num">12</div><div class="seo-label">Guide Pages</div></div>
-  </div>
-</div>
+<!-- CRON JOBS -->
+<div>
+<div class="sl">🕐 Cron Jobs</div>
+<div class="pnl">
+<div class="ph"><div class="pt"><span class="pu"><span class="pc"></span></span> Scheduled Agents</div><div class="chips"><span class="chip ok">14 ok</span><span class="chip er">1 err</span></div></div>
+<ul>
 
-<div class="sec">
-  <div class="sh">📋 Active Tasks (11)</div>
-  <table>
-    <thead><tr><th>Priority</th><th>Task</th><th>Status</th></tr></thead>
-    <tbody>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Resurrect Command Center dashboard — FastAPI dead, Paperclip dead, status.json f</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Weekly TikTok slide batch generation + Postiz UPLOAD to drafts</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">In-store ad pipeline: Mon=Hero Product, Wed=Bundle</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Ongoing SEO: blogs, citations, performance fixes, guide pages</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Weekly Analyzify/GA4/GSC reporting + Digiwaz confrontation</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Omni API: daily sales, stock sync, cache refresh, reporting</td>
-            <td><span class="badge" style="background:#3b82f6">active</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#eab308">MEDIUM</span></td>
-            <td class="task-desc">Set up Hilton Honors Classic Reward night availability alerts</td>
-            <td><span class="badge" style="background:#737373">pending</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#eab308">MEDIUM</span></td>
-            <td class="task-desc">73 DRAFT ghost products (29 real images, 44 AI placeholders)</td>
-            <td><span class="badge" style="background:#737373">pending</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#eab308">MEDIUM</span></td>
-            <td class="task-desc">Weekly Conversion Report cron in error state</td>
-            <td><span class="badge" style="background:#737373">pending</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#ef4444">HIGH</span></td>
-            <td class="task-desc">Build proper static data pipeline for GitHub Pages dashboards</td>
-            <td><span class="badge" style="background:#737373">pending</span></td>
-        </tr>
-        <tr>
-            <td><span class="badge" style="background:#22c55e">LOW</span></td>
-            <td class="task-desc">Rotate exposed credentials (PayFast, Zoho, Google OAuth, Postiz)</td>
-            <td><span class="badge" style="background:#737373">pending</span></td>
-        </tr></tbody>
-  </table>
-</div>
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Omni→Shopify Sync</div><div class="cs">0 9,13,19,1 * * * · 4×/day</div><div class="cm">kimi-k2.5 · isolated · ~91s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">46m ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 5h</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
 
-<div class="sec">
-  <div class="sh">⏰ Automation</div>
-  <div class="cron-row"><span class="cron-label">Cron Jobs</span><span class="cron-val">15 total</span></div>
-  <div class="cron-row"><span class="cron-label">Healthy</span><span class="cron-val" style="color:#22c55e">13</span></div>
-  <div class="cron-row"><span class="cron-label">Errors</span><span class="cron-val" style="color:#ef4444">1</span></div>
-</div>
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Morning Dashboard Refresh</div><div class="cs">30 7 * * * · daily 07:30</div><div class="cm">kimi-k2.5 · isolated · ~12s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">12h ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 12h</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
 
-<div class="ft">Onelife Intelligence × OpenClaw × Jarvis 🦞 · 18 Mar 2026, 19:35 SAST</div>
-</body>
-</html>
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Daily TikTok Analytics <small style="color:var(--t3)">(Nova)</small></div><div class="cs">0 9 * * * · daily 09:00</div><div class="cm">kimi-k2.5 · isolated · ~40s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">11h ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 13h</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Omni Cache Refresh</div><div class="cs">10 19 * * * · daily 19:10</div><div class="cm">kimi-k2.5 · isolated · ~158s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">36m ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 23h</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Evening Dashboard → GitHub</div><div class="cs">35 19 * * * · daily 19:35</div><div class="cm">kimi-k2.5 · isolated · ~21s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">11m ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 24h</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Biz Opportunity Scout <small style="color:var(--t3)">(Sage)</small></div><div class="cs">0 9 * * 5 · Fri 09:00</div><div class="cm">kimi-k2.5 · isolated · ~128s</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">4d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 2d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Friday Close-Out <small style="color:var(--t3)">(Cipher)</small></div><div class="cs">0 16 * * 5 · Fri 16:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">5d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 2d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Sunday TikTok Batch <small style="color:var(--t3)">(Nova)</small></div><div class="cs">0 9 * * 0 · Sun 09:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">3d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 4d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Weekly Ad Pipeline <small style="color:var(--t3)">(Nova)</small></div><div class="cs">30 7 * * 1 · Mon 07:30</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">3d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 4d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Weekly Onelife Edit</div><div class="cs">0 8 * * 1 · Mon 08:00</div><div class="cm">main session</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">2d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 5d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Weekly SEO Report <small style="color:var(--t3)">(Scout)</small></div><div class="cs">0 9 * * 1 · Mon 09:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">2d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 5d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci" style="background:rgba(239,68,68,.04)"><span class="cd er"></span><div><div class="cn" style="color:var(--er)">Weekly Conversion Report</div><div class="cs">0 10 * * 1 · Mon 10:00</div><div class="cm" style="color:var(--er);opacity:.7">kimi-k2.5 · FAILING</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls" style="color:var(--er)">2d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 5d</span></div><div style="margin-top:4px"><span class="pill er">error</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Biweekly Blog Post <small style="color:var(--t3)">(Nova)</small></div><div class="cs">0 8 * * 3 · Wed 08:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">7d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 7d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Weekly Competitor Pricing</div><div class="cs">0 8 * * 3 · Wed 08:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">7d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 7d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+<li class="ci"><span class="cd ok"></span><div><div class="cn">Monthly Blog Campaign</div><div class="cs">0 9 15 * * · 15th 09:00</div><div class="cm">kimi-k2.5 · isolated</div></div><div class="ct"><div class="cr"><span class="cl">last</span><span class="cls">3d ago</span></div><div class="cr"><span class="cl">next</span><span class="cnx">in 28d</span></div><div style="margin-top:4px"><span class="pill ok">ok</span></div></div></li>
+
+</ul></div></div>
+
+<!-- ACTIVE TASKS -->
+<div>
+<div class="sl">📋 Task Backlog</div>
+<div class="pnl">
+<div class="ph"><div class="pt">🎯 Active & Pending</div><div class="chips"><span class="chip" style="border-color:rgba(239,68,68,.4);color:#fc8181">6 active</span><span class="chip" style="border-color:rgba(245,158,11,.4);color:var(--wn)">4 pending</span></div></div>
+<ul>
+
+<li class="ti"><div class="th"><div class="tn">Resurrect Command Center Dashboard</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">FastAPI dead, Paperclip x86 on arm64. GitHub Pages has stale embedded data. Need proper static data pipeline via cron.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">Weekly TikTok Content Batch</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">Sunday batch cron exists. Must follow TIKTOK-RULES.md. Product audit before every push. MAX 5 hashtags. DRAFT only.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">In-Store Ad Pipeline</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">Weekly Ad Pipeline cron runs Mon 07:30. Edenvale ad v5 awaiting feedback. Mon=Hero Product, Wed=Bundle.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">SEO Optimization</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">17 blogs done. Remaining: Menopause, Liver, Joint/Bone, Iron/Women. 60 citations added. Performance 8/100 needs theme work.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">Analyzify / GA4 / GSC Reporting</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">GA4 G-FQ819LGSV3 live. Need March data to compare against Digiwaz claims. Weekly SEO report cron exists.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">Omni API Integration</div><div class="tb"><span class="pri H">HIGH</span><span class="pill wn">active</span></div></div><div class="tnt">Sync cron 4×/day. 8 scripts need refactor to shared libs. write_inventory scope missing from Shopify token.</div></li>
+
+<li class="ti" style="border-top:1px dashed var(--bd2)"><div class="th"><div class="tn">Dashboard Data Pipeline</div><div class="tb"><span class="pri H">HIGH</span><span class="pill pn">pending</span></div></div><div class="tnt">Evening cron pushes stale embedded data. Need: fresh Omni data → status.json → git push → GitHub Pages.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">Fix Weekly Conversion Cron</div><div class="tb"><span class="pri M">MED</span><span class="pill pn">pending</span></div></div><div class="tnt">Last run 2 days ago, error status. Needs diagnosis and fix.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">Hilton Reward Night Tracker</div><div class="tb"><span class="pri M">MED</span><span class="pill pn">pending</span></div></div><div class="tnt">Skill installed but no cron job configured. Alerts when reward nights open at luxury properties.</div></li>
+
+<li class="ti"><div class="th"><div class="tn">73 DRAFT Ghost Products</div><div class="tb"><span class="pri M">MED</span><span class="pill pn">pending</span></div></div><div class="tnt">29 real images, 44 AI placeholders. Ghost price sync cron runs daily 09:00.</div></li>
+
+</ul></div>
+
+<!-- COMPLETED TASKS -->
+<div class="pnl" style="margin-top:16px">
+<div class="ph"><div class="pt">✅ Recently Completed</div><div class="chips"><span class="chip ok">3 done</span></div></div>
+<ul>
+
+<li class="ti"><div class="th"><div class="tn done">GLP-1 Support Ecosystem</div><div class="tb"><span class="pill dn">done</span></div></div><div class="tnt">All live. Campaign scheduled Thu 20 Mar 08:00. 2 flows LIVE. Replace AI bundle images with real photos when available.</div></li>
+
+<li class="ti"><div class="th"><div class="tn done">Vivid Health Turnaround Analysis</div><div class="tb"><span class="pill dn">done</span></div></div><div class="tnt">Full report + product matrix + 2 MiroFish sims. Adversarial consensus: 18-24 month timeline. WP site fix blocked on creds.</div></li>
+
+<li class="ti"><div class="th"><div class="tn done">Tony Robbins Coaching Questionnaire</div><div class="tb"><span class="pill dn">done</span></div></div><div class="tnt">16 questions completed via interview. Filled into original PDF. UPW only event.</div></li>
+
+</ul></div>
+
+<!-- LOW PRI -->
+<div class="pnl" style="margin-top:16px">
+<div class="ph"><div class="pt">🔒 Backlog</div></div>
+<ul>
+<li class="ti"><div class="th"><div class="tn" style="opacity:.6">Credential Rotation (PayFast, Zoho, Google OAuth, Postiz)</div><div class="tb"><span class="pri L">LOW</span><span class="pill pn">pending</span></div></div><div class="tnt">Flagged in security audit. Not urgent but should be done.</div></li>
+</ul></div>
+
+</div><!-- end tasks column -->
+</div><!-- end mgrid -->
+
+<div class="footer">🦞 Jarvis Command Center · Generated 2026-03-18 19:46 SAST · Data from openclaw cron list + active-tasks.json · <a href="https://github.com/infoonelifesa-cpu/onelife-command" style="color:var(--ac2);text-decoration:none">GitHub</a></div>
+
+</main>
+
+<script>
+(function(){
+  function pad(n){return n<10?'0'+n:n}
+  function tick(){
+    var d=new Date();
+    var h=pad(d.getHours()),m=pad(d.getMinutes()),s=pad(d.getSeconds());
+    var el=document.getElementById('clk');
+    if(el) el.textContent=h+':'+m+':'+s+' SAST';
+  }
+  tick();
+  setInterval(tick,1000);
+})();
+</script>
+</body></html>
