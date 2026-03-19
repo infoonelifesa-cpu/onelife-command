@@ -38,6 +38,11 @@ AGENTS = {
         "desc": "TikTok batches, ad pipeline, blog posts, creative output. The maker.",
         "owns": ["Sunday TikTok Batch", "Weekly Ad Pipeline", "Biweekly Blog Post", "Friday Close-Out"]
     },
+    "Vivid": {
+        "emoji": "💚", "color": "#22c55e", "role": "Brand Builder",
+        "desc": "Vivid Health brand turnaround. Product descriptions, collection pages, bundles, website, social. Dedicated to making the house brand shine.",
+        "owns": []
+    },
 }
 
 
