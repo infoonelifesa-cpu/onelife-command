@@ -137,7 +137,17 @@ def generate():
     blocked = [t for t in tasks if t.get("status") == "blocked"]
     done = [t for t in tasks if t.get("status") == "done"]
 
-    cron_ok = sum(1 for c in crons if c["status"] == "ok")
+    # Stale error detection: if a cron errored >24h ago and hasn't run since,
+    # it's a stale error from a previous run, not an active problem.
+    # Treat as "stale" (warning) not "error" (critical).
+    for c in crons:
+        if c["status"] == "error" and c.get("last", ""):
+            last = c["last"]
+            # If last run was days ago, it's stale
+            if any(x in last for x in ["2d", "3d", "4d", "5d", "6d", "7d", "1w", "2w"]):
+                c["status"] = "stale"
+
+    cron_ok = sum(1 for c in crons if c["status"] in ("ok", "stale"))
     cron_err = sum(1 for c in crons if c["status"] == "error")
     cron_idle = sum(1 for c in crons if c["status"] == "idle")
     cron_total = len(crons)
@@ -146,9 +156,9 @@ def generate():
     agent_statuses = {}
     for agent in AGENTS:
         agent_crons = [c for c in crons if match_agent(c["name"]) == agent]
-        has_error = any(c["status"] == "error" for c in agent_crons)
+        has_error = any(c["status"] == "error" for c in agent_crons)  # only active errors, not stale
         has_recent = any("ago" in c.get("last", "") and ("min" in c["last"] or "1h" in c["last"] or "2h" in c["last"]) for c in agent_crons)
-        all_ok = all(c["status"] in ("ok", "idle") for c in agent_crons)
+        all_ok = all(c["status"] in ("ok", "idle", "stale") for c in agent_crons)
 
         if has_error:
             agent_statuses[agent] = "error"
