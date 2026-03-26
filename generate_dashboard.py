@@ -14,33 +14,48 @@ WORKSPACE = os.path.expanduser("~/.openclaw/workspace")
 # Agent roster — each agent has a role, emoji, color, and assigned crons/tasks
 AGENTS = {
     "Jarvis": {
-        "emoji": "🦞", "color": "#00ff88", "role": "Commander",
+        "emoji": "🦞", "color": "#00ff88", "role": "CEO / Orchestrator",
         "desc": "Orchestrates everything. Main session, strategic decisions, Naadir's right hand.",
-        "owns": ["Morning Dashboard", "Evening Dashboard", "Evening Intelligence", "Weekly Onelife Edit"]
+        "owns": ["Overnight Opportunity Engine", "Heartbeat"]
     },
     "Ghost": {
-        "emoji": "👻", "color": "#8b5cf6", "role": "Sync Operator",
-        "desc": "Omni↔Shopify inventory sync. Silent, reliable, runs when you're sleeping.",
-        "owns": ["Omni→Shopify Sync", "Omni Cache Refresh"]
+        "emoji": "👻", "color": "#8b5cf6", "role": "DevOps / Building",
+        "desc": "Omni-Shopify sync, dashboards, builds. Silent, reliable, runs when you're sleeping.",
+        "owns": ["Morning Dashboard", "Evening Dashboard", "Intelligence Dashboard",
+                 "Evening Intelligence", "Omni Cache Refresh", "Omni-Shopify Sync", "Paperclip Loop"]
     },
     "Scout": {
-        "emoji": "🔭", "color": "#3b82f6", "role": "Intelligence",
+        "emoji": "🔭", "color": "#3b82f6", "role": "Intelligence / Research",
         "desc": "SEO reports, competitor analysis, market scanning. Finds the opportunities.",
-        "owns": ["Weekly SEO Report", "Weekly Competitor", "Business Opportunity"]
+        "owns": ["Weekly SEO Report", "Competitive Price Scan", "Business Opportunity",
+                 "SEO Gap Finder", "Review Miner", "Product Trend Scanner",
+                 "Weekly Competitor Pricing", "Weekly Intel Brief", "Paperclip Loop"]
     },
     "Cipher": {
-        "emoji": "🔐", "color": "#f59e0b", "role": "Analytics",
-        "desc": "Conversion reports, GA4 tracking, performance metrics. The numbers brain.",
-        "owns": ["Weekly Conversion Report", "Daily TikTok Analytics", "Monthly Blog"]
+        "emoji": "🔐", "color": "#f59e0b", "role": "CTO / Engineering",
+        "desc": "Conversion reports, autoresearch experiments, analytics infrastructure. The numbers brain.",
+        "owns": ["Friday Close-Out", "Weekly Conversion Report", "Weekly Onelife Edit",
+                 "Autoresearch Experiments", "Autoresearch Morning Report", "Paperclip Loop"]
     },
     "Nova": {
-        "emoji": "✨", "color": "#ec4899", "role": "Content Creator",
+        "emoji": "✨", "color": "#ec4899", "role": "CMO / Marketing",
         "desc": "TikTok batches, ad pipeline, blog posts, creative output. The maker.",
-        "owns": ["Sunday TikTok Batch", "Weekly Ad Pipeline", "Biweekly Blog Post", "Friday Close-Out"]
+        "owns": ["Sunday TikTok Batch", "Daily TikTok Analytics", "Weekly Ad Pipeline",
+                 "Biweekly Blog Post", "Monthly Blog Campaign", "Paperclip Loop"]
     },
     "Vivid": {
-        "emoji": "💚", "color": "#22c55e", "role": "Brand Builder",
+        "emoji": "💚", "color": "#22c55e", "role": "Brand PM",
         "desc": "Vivid Health brand turnaround. Product descriptions, collection pages, bundles, website, social. Dedicated to making the house brand shine.",
+        "owns": []
+    },
+    "Sage": {
+        "emoji": "🧙", "color": "#a855f7", "role": "Deep Analysis",
+        "desc": "MiroShark simulations, deep business analysis, expert panels. The strategic thinker.",
+        "owns": ["Paperclip Loop"]
+    },
+    "Kimi": {
+        "emoji": "🌙", "color": "#06b6d4", "role": "Compaction / Fallback",
+        "desc": "Context compression, emergency model fallback. The efficiency expert.",
         "owns": []
     },
 }
@@ -105,11 +120,17 @@ def load_cron_jobs():
 
 
 def match_agent(job_name):
-    """Match a cron job to an agent. Handles truncated names."""
+    """Match a cron job to its owning agent.
+    Strategy 1: parse 'AgentName: ...' prefix (works for all current crons).
+    Strategy 2: fuzzy match against owns arrays as fallback.
+    """
+    if ":" in job_name:
+        prefix = job_name.split(":")[0].strip()
+        if prefix in AGENTS:
+            return prefix
     jn = job_name.lower()
     for agent, info in AGENTS.items():
         for pattern in info["owns"]:
-            # Match if pattern is in job name OR job name starts with pattern prefix (truncation)
             pl = pattern.lower()
             if pl in jn or jn.startswith(pl[:15]):
                 return agent
@@ -119,9 +140,12 @@ def match_agent(job_name):
 def load_seo_stats():
     try:
         with open(os.path.join(WORKSPACE, "command-center/status.json")) as f:
-            return json.load(f).get("seo", {})
+            d = json.load(f).get("seo", {})
+            if any(v for v in d.values()):
+                return d
     except:
-        return {"blog_posts": 17, "image_alts": 8397, "product_descriptions": 2108, "guide_pages": 12}
+        pass
+    return {"blog_posts": 17, "image_alts": 8397, "product_descriptions": 2108, "guide_pages": 3}
 
 
 def generate():
@@ -209,7 +233,7 @@ def generate():
         s_col = {"ok": "#22c55e", "error": "#ef4444", "idle": "#64748b", "stale": "#eab308"}.get(c["status"], "#64748b")
         cron_rows += f"""<tr>
             <td><span class="agent-badge" style="background:{a_info['color']}20;color:{a_info['color']}">{a_info['emoji']} {agent}</span></td>
-            <td class="cron-name">{c['name'][:40]}</td>
+            <td class="cron-name">{c['name']}</td>
             <td style="color:#94a3b8;font-size:12px">{c.get('model','')}</td>
             <td style="color:#94a3b8;font-size:12px">{c.get('last','—')}</td>
             <td style="font-size:12px">{c.get('next','—')}</td>
@@ -323,7 +347,7 @@ body::before{{
 table{{width:100%;border-collapse:collapse}}
 th{{font-size:10px;color:#404040;text-align:left;padding:10px 8px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #1e1e2e}}
 td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
-.cron-name{{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.cron-name{{max-width:400px;word-break:break-word}}
 .agent-badge{{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}}
 .status-pill{{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px}}
 
@@ -342,6 +366,14 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 .seo-item{{background:#0a0a14;border-radius:10px;padding:16px;text-align:center}}
 .seo-num{{font-size:24px;font-weight:800;color:#818cf8}}
 .seo-lbl{{font-size:10px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:1px}}
+
+/* Org Chart */
+.org-chart{{background:#0d0d1a;border:1px solid #1e1e2e;border-radius:16px;padding:24px 24px 16px;margin-bottom:20px;text-align:center}}
+.org-chart-title{{font-size:11px;font-weight:700;color:#404040;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}}
+.org-ceo{{display:inline-flex;align-items:center;gap:12px;background:#00ff8808;border:2px solid #00ff8830;border-radius:12px;padding:12px 28px;margin-bottom:0}}
+.org-reports{{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}}
+.org-node{{background:#0a0a14;border:1px solid #1e1e2e;border-top-width:3px;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#cbd5e1;min-width:90px;text-align:center;line-height:1.5}}
+.org-node small{{display:block;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:2px}}
 
 /* Links */
 .link-bar{{display:flex;gap:10px;justify-content:center;margin:20px 0;flex-wrap:wrap}}
@@ -388,7 +420,10 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 </div>
 
 <div class="link-bar">
-    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence Dashboard</a>
+    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
+    <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
+    <a href="https://italic-writer-ordinance-fluid.trycloudflare.com">📎 Paperclip</a>
+    <a href="http://localhost:3000">🦈 MiroShark</a>
     <a href="https://onelife.co.za/admin">🛍️ Shopify Admin</a>
     <a href="https://www.klaviyo.com/dashboard">📧 Klaviyo</a>
     <a href="https://analytics.google.com">📈 GA4</a>
@@ -402,6 +437,26 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
     <div class="kpi" style="--accent:#22c55e"><div class="kpi-val" style="color:#22c55e">{len(done)}</div><div class="kpi-lbl">Done</div></div>
     <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:{'#22c55e' if cron_err==0 else '#ef4444'}">{cron_ok}<span style="font-size:16px;color:#404040">/{cron_total}</span></div><div class="kpi-lbl">Crons</div></div>
     <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:{'#22c55e' if cron_err==0 else '#ef4444'}">{cron_err}</div><div class="kpi-lbl">Errors</div></div>
+</div>
+
+<!-- Org Hierarchy -->
+<div class="org-chart">
+    <div class="org-chart-title">ORG HIERARCHY — ALL AGENTS REPORT TO JARVIS</div>
+    <div class="org-ceo">
+        <span style="font-size:26px">🦞</span>
+        <span style="font-size:20px;font-weight:800;color:#00ff88">Jarvis</span>
+        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;border-left:1px solid #1e1e2e;padding-left:12px;margin-left:4px">CEO / Orchestrator</span>
+    </div>
+    <div style="width:2px;height:20px;background:linear-gradient(#00ff8830,#1e1e2e);margin:0 auto 12px"></div>
+    <div class="org-reports">
+        <div class="org-node" style="border-top-color:#ec4899">✨ Nova<small>CMO</small></div>
+        <div class="org-node" style="border-top-color:#f59e0b">🔐 Cipher<small>CTO</small></div>
+        <div class="org-node" style="border-top-color:#8b5cf6">👻 Ghost<small>DevOps</small></div>
+        <div class="org-node" style="border-top-color:#3b82f6">🔭 Scout<small>Intel</small></div>
+        <div class="org-node" style="border-top-color:#a855f7">🧙 Sage<small>Analysis</small></div>
+        <div class="org-node" style="border-top-color:#22c55e">💚 Vivid<small>Brand PM</small></div>
+        <div class="org-node" style="border-top-color:#06b6d4">🌙 Kimi<small>Fallback</small></div>
+    </div>
 </div>
 
 <!-- Agent Roster -->

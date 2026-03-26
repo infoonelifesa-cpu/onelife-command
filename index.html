@@ -85,7 +85,7 @@ body::before{
 table{width:100%;border-collapse:collapse}
 th{font-size:10px;color:#404040;text-align:left;padding:10px 8px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #1e1e2e}
 td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
-.cron-name{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cron-name{max-width:400px;word-break:break-word}
 .agent-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
 .status-pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px}
 
@@ -104,6 +104,14 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 .seo-item{background:#0a0a14;border-radius:10px;padding:16px;text-align:center}
 .seo-num{font-size:24px;font-weight:800;color:#818cf8}
 .seo-lbl{font-size:10px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+
+/* Org Chart */
+.org-chart{background:#0d0d1a;border:1px solid #1e1e2e;border-radius:16px;padding:24px 24px 16px;margin-bottom:20px;text-align:center}
+.org-chart-title{font-size:11px;font-weight:700;color:#404040;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.org-ceo{display:inline-flex;align-items:center;gap:12px;background:#00ff8808;border:2px solid #00ff8830;border-radius:12px;padding:12px 28px;margin-bottom:0}
+.org-reports{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.org-node{background:#0a0a14;border:1px solid #1e1e2e;border-top-width:3px;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#cbd5e1;min-width:90px;text-align:center;line-height:1.5}
+.org-node small{display:block;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
 /* Links */
 .link-bar{display:flex;gap:10px;justify-content:center;margin:20px 0;flex-wrap:wrap}
@@ -146,11 +154,14 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 <div class="header">
     <h1>COMMAND CENTER</h1>
     <div class="subtitle">Onelife Health · Mission Control</div>
-    <div class="timestamp">SYS.TIME 2026-03-26 07:30:08 SAST // ALL SYSTEMS ALERT</div>
+    <div class="timestamp">SYS.TIME 2026-03-26 18:15:49 SAST // ALL SYSTEMS ALERT</div>
 </div>
 
 <div class="link-bar">
-    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence Dashboard</a>
+    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
+    <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
+    <a href="https://italic-writer-ordinance-fluid.trycloudflare.com">📎 Paperclip</a>
+    <a href="http://localhost:3000">🦈 MiroShark</a>
     <a href="https://onelife.co.za/admin">🛍️ Shopify Admin</a>
     <a href="https://www.klaviyo.com/dashboard">📧 Klaviyo</a>
     <a href="https://analytics.google.com">📈 GA4</a>
@@ -162,8 +173,28 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
     <div class="kpi" style="--accent:#64748b"><div class="kpi-val" style="color:#64748b">5</div><div class="kpi-lbl">Pending</div></div>
     <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">0</div><div class="kpi-lbl">Blocked</div></div>
     <div class="kpi" style="--accent:#22c55e"><div class="kpi-val" style="color:#22c55e">3</div><div class="kpi-lbl">Done</div></div>
-    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">19<span style="font-size:16px;color:#404040">/25</span></div><div class="kpi-lbl">Crons</div></div>
-    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">3</div><div class="kpi-lbl">Errors</div></div>
+    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">21<span style="font-size:16px;color:#404040">/28</span></div><div class="kpi-lbl">Crons</div></div>
+    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">2</div><div class="kpi-lbl">Errors</div></div>
+</div>
+
+<!-- Org Hierarchy -->
+<div class="org-chart">
+    <div class="org-chart-title">ORG HIERARCHY — ALL AGENTS REPORT TO JARVIS</div>
+    <div class="org-ceo">
+        <span style="font-size:26px">🦞</span>
+        <span style="font-size:20px;font-weight:800;color:#00ff88">Jarvis</span>
+        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;border-left:1px solid #1e1e2e;padding-left:12px;margin-left:4px">CEO / Orchestrator</span>
+    </div>
+    <div style="width:2px;height:20px;background:linear-gradient(#00ff8830,#1e1e2e);margin:0 auto 12px"></div>
+    <div class="org-reports">
+        <div class="org-node" style="border-top-color:#ec4899">✨ Nova<small>CMO</small></div>
+        <div class="org-node" style="border-top-color:#f59e0b">🔐 Cipher<small>CTO</small></div>
+        <div class="org-node" style="border-top-color:#8b5cf6">👻 Ghost<small>DevOps</small></div>
+        <div class="org-node" style="border-top-color:#3b82f6">🔭 Scout<small>Intel</small></div>
+        <div class="org-node" style="border-top-color:#a855f7">🧙 Sage<small>Analysis</small></div>
+        <div class="org-node" style="border-top-color:#22c55e">💚 Vivid<small>Brand PM</small></div>
+        <div class="org-node" style="border-top-color:#06b6d4">🌙 Kimi<small>Fallback</small></div>
+    </div>
 </div>
 
 <!-- Agent Roster -->
@@ -171,57 +202,57 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
     <div class="section-title">AGENT ROSTER</div>
     <div class="agents-grid">
         
-        <div class="agent-card pulse-error" style="border-color:#00ff8833;">
+        <div class="agent-card " style="border-color:#00ff8833;">
             <div class="agent-avatar" style="background:#00ff8815;border:2px solid #00ff88">
                 <span class="agent-emoji">🦞</span>
-                <div class="status-dot" style="background:#ef4444"></div>
-            </div>
-            <div class="agent-info">
-                <div class="agent-name" style="color:#00ff88">Jarvis</div>
-                <div class="agent-role">Commander</div>
-                <div class="agent-desc">Orchestrates everything. Main session, strategic decisions, Naadir's right hand.</div>
-                <div class="agent-status" style="color:#ef4444">ERROR</div>
-            </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">·</span> Ghost: Morning Dashboard <span class="cron-time">1d ago</span></div><div class="agent-cron"><span style="color:#64748b">·</span> Scout: Weekly Intel B <span class="cron-time"><1m ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Nova: Daily TikTok An <span class="cron-time">22h ago</span></div></div>
-        </div>
-        <div class="agent-card " style="border-color:#8b5cf633;">
-            <div class="agent-avatar" style="background:#8b5cf615;border:2px solid #8b5cf6">
-                <span class="agent-emoji">👻</span>
                 <div class="status-dot" style="background:#64748b"></div>
             </div>
             <div class="agent-info">
-                <div class="agent-name" style="color:#8b5cf6">Ghost</div>
-                <div class="agent-role">Sync Operator</div>
-                <div class="agent-desc">Omni↔Shopify inventory sync. Silent, reliable, runs when you're sleeping.</div>
+                <div class="agent-name" style="color:#00ff88">Jarvis</div>
+                <div class="agent-role">CEO / Orchestrator</div>
+                <div class="agent-desc">Orchestrates everything. Main session, strategic decisions, Naadir's right hand.</div>
                 <div class="agent-status" style="color:#64748b">STANDBY</div>
             </div>
             <div class="agent-feed"></div>
         </div>
-        <div class="agent-card " style="border-color:#3b82f633;">
+        <div class="agent-card pulse-error" style="border-color:#8b5cf633;">
+            <div class="agent-avatar" style="background:#8b5cf615;border:2px solid #8b5cf6">
+                <span class="agent-emoji">👻</span>
+                <div class="status-dot" style="background:#ef4444"></div>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name" style="color:#8b5cf6">Ghost</div>
+                <div class="agent-role">DevOps / Building</div>
+                <div class="agent-desc">Omni-Shopify sync, dashboards, builds. Silent, reliable, runs when you're sleeping.</div>
+                <div class="agent-status" style="color:#ef4444">ERROR</div>
+            </div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Omni-Shopify Sync <span class="cron-time">5h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Omni Cache Ref <span class="cron-time">23h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Intelligence D <span class="cron-time">23h ago</span></div></div>
+        </div>
+        <div class="agent-card pulse-active" style="border-color:#3b82f633;box-shadow:0 0 20px #3b82f640,0 0 40px #3b82f620;">
             <div class="agent-avatar" style="background:#3b82f615;border:2px solid #3b82f6">
                 <span class="agent-emoji">🔭</span>
-                <div class="status-dot" style="background:#64748b"></div>
+                <div class="status-dot" style="background:#22c55e"></div>
             </div>
             <div class="agent-info">
                 <div class="agent-name" style="color:#3b82f6">Scout</div>
-                <div class="agent-role">Intelligence</div>
+                <div class="agent-role">Intelligence / Research</div>
                 <div class="agent-desc">SEO reports, competitor analysis, market scanning. Finds the opportunities.</div>
-                <div class="agent-status" style="color:#64748b">STANDBY</div>
+                <div class="agent-status" style="color:#22c55e">ACTIVE</div>
             </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Scout: Weekly SEO Report <span class="cron-time">3d ago</span></div></div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">○</span> Scout: Paperclip Loop <span class="cron-time"></span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Scout: Business Oppor <span class="cron-time">6d ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Scout: Competitive Pr <span class="cron-time">5d ago</span></div></div>
         </div>
-        <div class="agent-card " style="border-color:#f59e0b33;">
+        <div class="agent-card pulse-active" style="border-color:#f59e0b33;box-shadow:0 0 20px #f59e0b40,0 0 40px #f59e0b20;">
             <div class="agent-avatar" style="background:#f59e0b15;border:2px solid #f59e0b">
                 <span class="agent-emoji">🔐</span>
-                <div class="status-dot" style="background:#64748b"></div>
+                <div class="status-dot" style="background:#22c55e"></div>
             </div>
             <div class="agent-info">
                 <div class="agent-name" style="color:#f59e0b">Cipher</div>
-                <div class="agent-role">Analytics</div>
-                <div class="agent-desc">Conversion reports, GA4 tracking, performance metrics. The numbers brain.</div>
-                <div class="agent-status" style="color:#64748b">STANDBY</div>
+                <div class="agent-role">CTO / Engineering</div>
+                <div class="agent-desc">Conversion reports, autoresearch experiments, analytics infrastructure. The numbers brain.</div>
+                <div class="agent-status" style="color:#22c55e">ACTIVE</div>
             </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Nova: Monthly Blog Ca <span class="cron-time">11d ago</span></div></div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Cipher: Autoresearch  <span class="cron-time">16h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Cipher: Autoresearch  <span class="cron-time">12h ago</span></div><div class="agent-cron"><span style="color:#64748b">·</span> Cipher: Friday Close-Out <span class="cron-time">6d ago</span></div></div>
         </div>
         <div class="agent-card pulse-error" style="border-color:#ec489933;">
             <div class="agent-avatar" style="background:#ec489915;border:2px solid #ec4899">
@@ -230,11 +261,11 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             </div>
             <div class="agent-info">
                 <div class="agent-name" style="color:#ec4899">Nova</div>
-                <div class="agent-role">Content Creator</div>
+                <div class="agent-role">CMO / Marketing</div>
                 <div class="agent-desc">TikTok batches, ad pipeline, blog posts, creative output. The maker.</div>
                 <div class="agent-status" style="color:#ef4444">ERROR</div>
             </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">·</span> Cipher: Friday Close-Out <span class="cron-time">6d ago</span></div><div class="agent-cron"><span style="color:#64748b">·</span> Nova: Weekly Ad Pipeline <span class="cron-time">3d ago</span></div><div class="agent-cron"><span style="color:#ef4444">✗</span> Nova: Biweekly Blog Post <span class="cron-time">23h ago</span></div></div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">○</span> Nova: Paperclip Loop <span class="cron-time"></span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Nova: Daily TikTok An <span class="cron-time">9h ago</span></div><div class="agent-cron"><span style="color:#64748b">·</span> Nova: Sunday TikTok B <span class="cron-time">4d ago</span></div></div>
         </div>
         <div class="agent-card " style="border-color:#22c55e33;">
             <div class="agent-avatar" style="background:#22c55e15;border:2px solid #22c55e">
@@ -243,8 +274,34 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             </div>
             <div class="agent-info">
                 <div class="agent-name" style="color:#22c55e">Vivid</div>
-                <div class="agent-role">Brand Builder</div>
+                <div class="agent-role">Brand PM</div>
                 <div class="agent-desc">Vivid Health brand turnaround. Product descriptions, collection pages, bundles, website, social. Dedicated to making the house brand shine.</div>
+                <div class="agent-status" style="color:#64748b">STANDBY</div>
+            </div>
+            <div class="agent-feed"></div>
+        </div>
+        <div class="agent-card " style="border-color:#a855f733;">
+            <div class="agent-avatar" style="background:#a855f715;border:2px solid #a855f7">
+                <span class="agent-emoji">🧙</span>
+                <div class="status-dot" style="background:#64748b"></div>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name" style="color:#a855f7">Sage</div>
+                <div class="agent-role">Deep Analysis</div>
+                <div class="agent-desc">MiroShark simulations, deep business analysis, expert panels. The strategic thinker.</div>
+                <div class="agent-status" style="color:#64748b">STANDBY</div>
+            </div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">○</span> Sage: Paperclip Loop <span class="cron-time"></span></div></div>
+        </div>
+        <div class="agent-card " style="border-color:#06b6d433;">
+            <div class="agent-avatar" style="background:#06b6d415;border:2px solid #06b6d4">
+                <span class="agent-emoji">🌙</span>
+                <div class="status-dot" style="background:#64748b"></div>
+            </div>
+            <div class="agent-info">
+                <div class="agent-name" style="color:#06b6d4">Kimi</div>
+                <div class="agent-role">Compaction / Fallback</div>
+                <div class="agent-desc">Context compression, emergency model fallback. The efficiency expert.</div>
                 <div class="agent-status" style="color:#64748b">STANDBY</div>
             </div>
             <div class="agent-feed"></div>
@@ -254,120 +311,134 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 
 <!-- Cron Monitor -->
 <div class="section">
-    <div class="section-title">AUTOMATION GRID — 25 Jobs</div>
+    <div class="section-title">AUTOMATION GRID — 28 Jobs</div>
     <table>
         <thead><tr><th>Agent</th><th>Job</th><th>Model</th><th>Last Run</th><th>Next</th><th>Status</th></tr></thead>
         <tbody><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Ghost: Morning Dashboard</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">1d ago</td>
-            <td style="font-size:12px"></td>
-            <td><span class="status-pill" style="background:#64748b">unknown</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Scout: Weekly Intel B</td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px"><1m ago</td>
-            <td style="font-size:12px"></td>
-            <td><span class="status-pill" style="background:#64748b">unknown</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Nova: Daily TikTok An</td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">22h ago</td>
-            <td style="font-size:12px">1h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
             <td class="cron-name">Ghost: Omni-Shopify Sync</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">6h ago</td>
+            <td style="color:#94a3b8;font-size:12px">5h ago</td>
+            <td style="font-size:12px">44m</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
+            <td class="cron-name">Ghost: Omni Cache Ref</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
+            <td style="color:#94a3b8;font-size:12px">23h ago</td>
+            <td style="font-size:12px">54m</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
+            <td class="cron-name">Ghost: Intelligence D</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
+            <td style="color:#94a3b8;font-size:12px">23h ago</td>
             <td style="font-size:12px">1h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Ghost: Omni Cache Ref</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">12h ago</td>
-            <td style="font-size:12px">12h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Ghost: Intelligence D</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">12h ago</td>
-            <td style="font-size:12px">12h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
             <td class="cron-name">Ghost: Evening Dashboard</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">12h ago</td>
-            <td style="font-size:12px">12h</td>
+            <td style="color:#94a3b8;font-size:12px">23h ago</td>
+            <td style="font-size:12px">1h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
             <td class="cron-name">Ghost: Evening Intell</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
-            <td style="color:#94a3b8;font-size:12px">12h ago</td>
-            <td style="font-size:12px">12h</td>
+            <td style="color:#94a3b8;font-size:12px">23h ago</td>
+            <td style="font-size:12px">1h</td>
             <td><span class="status-pill" style="background:#ef4444">error</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
+            <td class="cron-name">Scout: Paperclip Loop</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px"></td>
+            <td style="font-size:12px">2h</td>
+            <td><span class="status-pill" style="background:#64748b">idle</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
+            <td class="cron-name">Ghost: Paperclip Loop</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px"></td>
+            <td style="font-size:12px">2h</td>
+            <td><span class="status-pill" style="background:#64748b">idle</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
             <td class="cron-name">Cipher: Autoresearch </td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">5h ago</td>
-            <td style="font-size:12px">14h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Jarvis: Overnight Opp</td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">6h ago</td>
-            <td style="font-size:12px">18h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Cipher: Autoresearch </td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">1h ago</td>
-            <td style="font-size:12px">23h</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Scout: Business Oppor</td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">6d ago</td>
-            <td style="font-size:12px">1d</td>
+            <td style="color:#94a3b8;font-size:12px">16h ago</td>
+            <td style="font-size:12px">4h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
+            <td class="cron-name">Nova: Paperclip Loop</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px"></td>
+            <td style="font-size:12px">4h</td>
+            <td><span class="status-pill" style="background:#64748b">idle</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#a855f720;color:#a855f7">🧙 Sage</span></td>
+            <td class="cron-name">Sage: Paperclip Loop</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px"></td>
+            <td style="font-size:12px">6h</td>
+            <td><span class="status-pill" style="background:#64748b">idle</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
+            <td class="cron-name">Cipher: Autoresearch </td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px">12h ago</td>
+            <td style="font-size:12px">12h</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
+            <td class="cron-name">Ghost: Morning Dashboard</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
+            <td style="color:#94a3b8;font-size:12px">11h ago</td>
+            <td style="font-size:12px">13h</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
+            <td class="cron-name">Nova: Daily TikTok An</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px">9h ago</td>
+            <td style="font-size:12px">15h</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
+            <td class="cron-name">Scout: Business Oppor</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px">6d ago</td>
+            <td style="font-size:12px">15h</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
             <td class="cron-name">Cipher: Friday Close-Out</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
             <td style="color:#94a3b8;font-size:12px">6d ago</td>
-            <td style="font-size:12px">1d</td>
+            <td style="font-size:12px">22h</td>
             <td><span class="status-pill" style="background:#eab308">stale</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
             <td class="cron-name">Scout: Competitive Pr</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">4d ago</td>
-            <td style="font-size:12px">3d</td>
+            <td style="color:#94a3b8;font-size:12px">5d ago</td>
+            <td style="font-size:12px">2d</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
             <td class="cron-name">Nova: Sunday TikTok B</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
             <td style="color:#94a3b8;font-size:12px">4d ago</td>
             <td style="font-size:12px">3d</td>
             <td><span class="status-pill" style="background:#eab308">stale</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
             <td class="cron-name">Scout: SEO Gap Finder</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">3d ago</td>
-            <td style="font-size:12px">4d</td>
+            <td style="color:#94a3b8;font-size:12px">4d ago</td>
+            <td style="font-size:12px">3d</td>
             <td><span class="status-pill" style="background:#eab308">stale</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
@@ -377,7 +448,7 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td style="font-size:12px">4d</td>
             <td><span class="status-pill" style="background:#eab308">stale</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
             <td class="cron-name">Cipher: Weekly Onelif</td>
             <td style="color:#94a3b8;font-size:12px"></td>
             <td style="color:#94a3b8;font-size:12px">3d ago</td>
@@ -391,42 +462,49 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td style="font-size:12px">4d</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
             <td class="cron-name">Cipher: Weekly Conver</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.4</td>
             <td style="color:#94a3b8;font-size:12px">3d ago</td>
             <td style="font-size:12px">4d</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
             <td class="cron-name">Scout: Review Miner</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
             <td style="color:#94a3b8;font-size:12px"></td>
-            <td style="font-size:12px">5d</td>
+            <td style="font-size:12px">4d</td>
             <td><span class="status-pill" style="background:#64748b">idle</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
             <td class="cron-name">Scout: Product Trend </td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px">2d ago</td>
+            <td style="font-size:12px">5d</td>
+            <td><span class="status-pill" style="background:#eab308">stale</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
+            <td class="cron-name">Nova: Biweekly Blog Post</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
             <td style="color:#94a3b8;font-size:12px">1d ago</td>
             <td style="font-size:12px">6d</td>
             <td><span class="status-pill" style="background:#ef4444">error</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
-            <td class="cron-name">Nova: Biweekly Blog Post</td>
-            <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">23h ago</td>
-            <td style="font-size:12px">6d</td>
-            <td><span class="status-pill" style="background:#ef4444">error</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
             <td class="cron-name">Scout: Weekly Competi</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
-            <td style="color:#94a3b8;font-size:12px">24h ago</td>
+            <td style="color:#94a3b8;font-size:12px">1d ago</td>
             <td style="font-size:12px">6d</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
-            <td><span class="agent-badge" style="background:#f59e0b20;color:#f59e0b">🔐 Cipher</span></td>
+            <td><span class="agent-badge" style="background:#3b82f620;color:#3b82f6">🔭 Scout</span></td>
+            <td class="cron-name">Scout: Weekly Intel B</td>
+            <td style="color:#94a3b8;font-size:12px">claude-...</td>
+            <td style="color:#94a3b8;font-size:12px">11h ago</td>
+            <td style="font-size:12px">7d</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
             <td class="cron-name">Nova: Monthly Blog Ca</td>
             <td style="color:#94a3b8;font-size:12px">claude-...</td>
             <td style="color:#94a3b8;font-size:12px">11d ago</td>
@@ -557,10 +635,10 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 <div class="section">
     <div class="section-title">SEO & CONTENT METRICS</div>
     <div class="seo-grid">
-        <div class="seo-item"><div class="seo-num">0</div><div class="seo-lbl">Blog Posts</div></div>
-        <div class="seo-item"><div class="seo-num">0</div><div class="seo-lbl">Image Alts</div></div>
-        <div class="seo-item"><div class="seo-num">0</div><div class="seo-lbl">Descriptions</div></div>
-        <div class="seo-item"><div class="seo-num">0</div><div class="seo-lbl">Guide Pages</div></div>
+        <div class="seo-item"><div class="seo-num">17</div><div class="seo-lbl">Blog Posts</div></div>
+        <div class="seo-item"><div class="seo-num">8,397</div><div class="seo-lbl">Image Alts</div></div>
+        <div class="seo-item"><div class="seo-num">2,108</div><div class="seo-lbl">Descriptions</div></div>
+        <div class="seo-item"><div class="seo-num">3</div><div class="seo-lbl">Guide Pages</div></div>
     </div>
 </div>
 
