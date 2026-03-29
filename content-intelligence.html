@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="1800">
+<title>Content Intelligence Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#06060f;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(74,222,128,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.container{max-width:1380px;margin:0 auto;padding:24px;position:relative;z-index:1}
+.header{padding:20px 0 24px;text-align:center}
+.header h1{font-size:40px;font-weight:900;letter-spacing:2px;color:#4ade80;text-shadow:0 0 24px rgba(74,222,128,.22)}
+.subtitle{margin-top:8px;color:#94a3b8;letter-spacing:2px;text-transform:uppercase;font-size:12px}
+.timestamp{margin-top:10px;color:#475569;font-size:11px;font-family:Menlo,monospace}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0 24px}
+.kpi{background:#0d0d1a;border:1px solid #1e293b;border-radius:18px;padding:18px 16px;text-align:center;box-shadow:0 20px 40px rgba(2,6,23,.25)}
+.kpi .val{font-size:34px;font-weight:800}
+.kpi .lbl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+.section{background:#0d0d1a;border:1px solid #1e293b;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 20px 40px rgba(2,6,23,.18)}
+.section-title{font-size:16px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';height:1px;flex:1;background:#1e293b}
+.workflow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.workflow-card{background:#0a0a14;border:1px solid #1f2937;border-radius:16px;padding:18px}
+.workflow-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px}
+.workflow-name{font-size:20px;font-weight:800}
+.workflow-owner{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+.score-ring{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:4px solid #4ade80;background:#0f172a;color:#4ade80;font-size:22px;font-weight:900}
+.signal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.signal-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #1e293b;border-radius:12px;background:#020617}
+.signal-chip .dot{width:10px;height:10px;border-radius:50%}
+.signal-chip small{margin-left:auto;color:#94a3b8;font-size:11px}
+.matrix-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #132033;font-size:13px}
+th{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px}
+.status-pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:10px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:1px}
+.opp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.opp-card{background:#06101d;border:1px solid #1e293b;border-radius:16px;padding:16px}
+.opp-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.opp-score{font-size:28px;font-weight:900}
+.opp-type{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px}
+.opp-title{font-size:16px;font-weight:800;line-height:1.35;margin-bottom:8px}
+.opp-summary{font-size:13px;color:#cbd5e1;line-height:1.55;margin-bottom:10px}
+.opp-meta{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px}
+.twocol{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.file-list td:first-child{color:#94a3b8;font-weight:700}
+ul{padding-left:18px;color:#cbd5e1}
+.footer{padding:18px 0 40px;text-align:center;color:#475569;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+a{color:#38bdf8}
+@media (max-width: 960px){
+  .kpis,.workflow-grid,.opp-grid,.twocol{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>CONTENT INTELLIGENCE</h1>
+    <div class="subtitle">Virlo + X + Autoresearch + Internal Analytics + Paperclip</div>
+    <div class="timestamp">SYS.TIME 2026-03-30 01:27:35 SAST · POLISHED V1 · AUTO-REFRESH 30M</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val" style="color:#4ade80">26</div><div class="lbl">Fresh Signals</div></div>
+    <div class="kpi"><div class="val" style="color:#38bdf8">99</div><div class="lbl">Avg Coverage</div></div>
+    <div class="kpi"><div class="val" style="color:#f59e0b">7</div><div class="lbl">Opportunities</div></div>
+    <div class="kpi"><div class="val" style="color:#ef4444">0</div><div class="lbl">Missing Signals</div></div>
+    <div class="kpi"><div class="val" style="color:#a78bfa">1</div><div class="lbl">Paperclip Tickets</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Workflow Coverage</div>
+    <div class="workflow-grid"><div class="workflow-card">
+                <div class="workflow-top">
+                    <div>
+                        <div class="workflow-name">Ad Engine</div>
+                        <div class="workflow-owner">Nova + Scout</div>
+                    </div>
+                    <div class="score-ring"><span>100</span></div>
+                </div>
+                <div class="signal-grid"><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Internal analytics</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#38bdf833"><span class="dot" style="background:#38bdf8"></span><span>Autoresearch</span><small>Connected</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>X research</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Virlo</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Product audit</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Feedback loop</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Paperclip</span><small>Fresh</small></div></div>
+            </div><div class="workflow-card">
+                <div class="workflow-top">
+                    <div>
+                        <div class="workflow-name">Blog / SEO Engine</div>
+                        <div class="workflow-owner">Scout + Nova</div>
+                    </div>
+                    <div class="score-ring"><span>100</span></div>
+                </div>
+                <div class="signal-grid"><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>SEO / Search Console</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Autoresearch</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>X research</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Virlo</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Feedback loop</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Paperclip</span><small>Fresh</small></div></div>
+            </div><div class="workflow-card">
+                <div class="workflow-top">
+                    <div>
+                        <div class="workflow-name">Klaviyo Blog Campaign Engine</div>
+                        <div class="workflow-owner">Nova</div>
+                    </div>
+                    <div class="score-ring"><span>100</span></div>
+                </div>
+                <div class="signal-grid"><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Internal analytics</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Autoresearch</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#38bdf833"><span class="dot" style="background:#38bdf8"></span><span>X research</span><small>Connected</small></div><div class="signal-chip" style="border-color:#38bdf833"><span class="dot" style="background:#38bdf8"></span><span>Virlo</span><small>Connected</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Seasonality</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Feedback loop</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Paperclip</span><small>Fresh</small></div></div>
+            </div><div class="workflow-card">
+                <div class="workflow-top">
+                    <div>
+                        <div class="workflow-name">TikTok Engine</div>
+                        <div class="workflow-owner">Nova</div>
+                    </div>
+                    <div class="score-ring"><span>95</span></div>
+                </div>
+                <div class="signal-grid"><div class="signal-chip" style="border-color:#f59e0b33"><span class="dot" style="background:#f59e0b"></span><span>Internal analytics</span><small>Stale</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Autoresearch</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>X research</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Virlo</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Product audit</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Feedback loop</span><small>Fresh</small></div><div class="signal-chip" style="border-color:#22c55e33"><span class="dot" style="background:#22c55e"></span><span>Paperclip</span><small>Fresh</small></div></div>
+            </div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Coverage Matrix</div>
+    <div class="matrix-wrap">
+      <table>
+        <thead><tr><th>Workflow</th><th>Signal</th><th>Status</th><th>Note</th></tr></thead>
+        <tbody><tr><td>Ad Engine</td><td>Internal analytics</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Omni sales velocity is wired</td></tr><tr><td>Ad Engine</td><td>Autoresearch</td><td><span class='status-pill' style='background:#38bdf8'>Connected</span></td><td>Autoresearch connected</td></tr><tr><td>Ad Engine</td><td>X research</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Fresh X trend signals available for Onelife ads and topic mining</td></tr><tr><td>Ad Engine</td><td>Virlo</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Visual symptom diagnosis for sleep and cortisol problems, Type-specific magnesium matching</td></tr><tr><td>Ad Engine</td><td>Product audit</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>GP, stock, and repeat guard are wired</td></tr><tr><td>Ad Engine</td><td>Feedback loop</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Promotion history feedback is wired</td></tr><tr><td>Ad Engine</td><td>Paperclip</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Execution path covered via Nova + Scout loops</td></tr><tr><td>Blog / SEO Engine</td><td>SEO / Search Console</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Search Console drives selection</td></tr><tr><td>Blog / SEO Engine</td><td>Autoresearch</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Blog autoresearch is embedded in ticket descriptions</td></tr><tr><td>Blog / SEO Engine</td><td>X research</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Fresh X trend signals available for Onelife ads and topic mining</td></tr><tr><td>Blog / SEO Engine</td><td>Virlo</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Magnesium dominates the viral health supplement landscape, Gut health and probiotics, Coll</td></tr><tr><td>Blog / SEO Engine</td><td>Feedback loop</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Blog optimisation loop closes recommendation → ticket loop</td></tr><tr><td>Blog / SEO Engine</td><td>Paperclip</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Scout execution path is autonomous</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Internal analytics</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Campaign routine exists</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Autoresearch</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Prompt requires autoresearch</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>X research</td><td><span class='status-pill' style='background:#38bdf8'>Connected</span></td><td>Prompt references X research</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Virlo</td><td><span class='status-pill' style='background:#38bdf8'>Connected</span></td><td>Prompt references Virlo</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Seasonality</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Monthly seasonality logic present</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Feedback loop</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Prompt avoids repeats</td></tr><tr><td>Klaviyo Blog Campaign Engine</td><td>Paperclip</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Nova execution path is autonomous</td></tr><tr><td>TikTok Engine</td><td>Internal analytics</td><td><span class='status-pill' style='background:#f59e0b'>Stale</span></td><td>Best hook: Your brain is 60% fat — and most South Africans are starving it daily.</td></tr><tr><td>TikTok Engine</td><td>Autoresearch</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Pipeline reads autoresearch TSVs</td></tr><tr><td>TikTok Engine</td><td>X research</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Fresh X trend signals available for Onelife ads and topic mining</td></tr><tr><td>TikTok Engine</td><td>Virlo</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>#skincare, #preworkout, #collagen, #fitness</td></tr><tr><td>TikTok Engine</td><td>Product audit</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Shopify product audit is wired</td></tr><tr><td>TikTok Engine</td><td>Feedback loop</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Avg views: 245.1</td></tr><tr><td>TikTok Engine</td><td>Paperclip</td><td><span class='status-pill' style='background:#22c55e'>Fresh</span></td><td>Nova execution path is autonomous</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Top Opportunities</div>
+    <div class="opp-grid"><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#22c55e">90</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Magnesium / sleep</div>
+                <div class="opp-summary">Theme showing up across 3 sources: tiktok_batch, virlo, x.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#f59e0b">75</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Strong</div>
+                <div class="opp-summary">Theme showing up across 2 sources: virlo, x.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#f59e0b">75</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Sleep / stress</div>
+                <div class="opp-summary">Theme showing up across 2 sources: virlo, x.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#f59e0b">75</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Remain</div>
+                <div class="opp-summary">Theme showing up across 2 sources: virlo, x.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#f59e0b">75</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Probiotics</div>
+                <div class="opp-summary">Theme showing up across 2 sources: virlo, x.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#f59e0b">75</span><span class="opp-type">theme convergence</span></div>
+                <div class="opp-title">Exploit converging signal theme: Insomnia</div>
+                <div class="opp-summary">Theme showing up across 2 sources: tiktok_batch, virlo.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div><div class="opp-card">
+                <div class="opp-header"><span class="opp-score" style="color:#64748b">59</span><span class="opp-type">freshness gap</span></div>
+                <div class="opp-title">[TikTok Engine] Refresh stale signals: Internal analytics</div>
+                <div class="opp-summary">TikTok Engine has stale but connected inputs: Internal analytics.</div>
+                <div class="opp-meta">Owner: NOVA · Ready for Paperclip</div>
+            </div></div>
+  </div>
+
+  <div class="twocol">
+    <div class="section">
+      <div class="section-title">Paperclip Actions From This Run</div>
+      <ul><li>Exploit converging signal theme: Magnesium / sleep</li></ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Signal Files</div>
+      <table class="file-list"><tbody><tr><td>tiktok_batch</td><td>/Users/naadir/.openclaw/workspace/memory/tiktok-batch-2026-03-30.json</td></tr><tr><td>tiktok_analytics</td><td>/Users/naadir/.openclaw/workspace/memory/tiktok-analytics-latest.json</td></tr><tr><td>x_markdown</td><td>/Users/naadir/.openclaw/workspace/memory/x-trends-2026-03-29.md</td></tr><tr><td>x_cards</td><td>/Users/naadir/.openclaw/workspace/memory/action-cards-2026-03-30.json</td></tr><tr><td>virlo</td><td>/Users/naadir/.openclaw/workspace/memory/virlo-trends-2026-03-30.json</td></tr><tr><td>blog_opt</td><td>/Users/naadir/.openclaw/workspace/memory/blog-optimization-2026-03-30.json</td></tr><tr><td>content_ar</td><td>—</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <div class="footer">ONELIFE HEALTH · JARVIS CONTENT FLYWHEEL · SIGNALS → SCORES → PAPERCLIP → EXECUTION → FEEDBACK</div>
+</div>
+</body>
+</html>
