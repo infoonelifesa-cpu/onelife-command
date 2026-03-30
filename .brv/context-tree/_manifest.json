@@ -1,0 +1,55 @@
+{
+  "active_context": [
+    {
+      "order": 3,
+      "path": "_index.md",
+      "tokens": 324,
+      "type": "summary"
+    },
+    {
+      "order": 2,
+      "path": "project_management/_index.md",
+      "tokens": 231,
+      "type": "summary"
+    },
+    {
+      "order": 2,
+      "path": "team/_index.md",
+      "tokens": 200,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/command_center/_index.md",
+      "tokens": 232,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "team/agent_roster/_index.md",
+      "tokens": 241,
+      "type": "summary"
+    },
+    {
+      "importance": 50,
+      "path": "project_management/command_center/command_center_dashboard.md",
+      "tokens": 331,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "team/agent_roster/agent_roster.md",
+      "tokens": 291,
+      "type": "context"
+    }
+  ],
+  "generated_at": "2026-03-29T17:57:20.742Z",
+  "lane_tokens": {
+    "contexts": 622,
+    "stubs": 0,
+    "summaries": 1228
+  },
+  "source_fingerprint": "d36d6dce18aa6253f35d193a835847f7be925b7504849957a6e6b2aacf45e495",
+  "total_tokens": 1850,
+  "version": 1
+}
