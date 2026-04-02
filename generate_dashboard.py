@@ -423,7 +423,7 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
-    <a href="https://declaration-handmade-pete-finals.trycloudflare.com" target="_blank">📎 Paperclip</a>
+    <a href="https://considerations-plots-hindu-coastal.trycloudflare.com" target="_blank">📎 Paperclip</a>
     <a href="http://localhost:3000">🦈 MiroShark</a>
     <a href="https://onelife.co.za/admin">🛍️ Shopify Admin</a>
     <a href="https://www.klaviyo.com/dashboard">📧 Klaviyo</a>
