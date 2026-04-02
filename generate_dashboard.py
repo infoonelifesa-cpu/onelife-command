@@ -11,6 +11,20 @@ SAST = timezone(timedelta(hours=2))
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE = os.path.expanduser("~/.openclaw/workspace")
 
+
+def load_paperclip_public_url():
+    path = os.path.join(WORKSPACE, "memory", "paperclip_public_url.json")
+    try:
+        with open(path) as f:
+            data = json.load(f)
+        url = str(data.get("url") or "").strip()
+        status = str(data.get("status") or "").strip().lower()
+        if url and status == "live":
+            return url
+    except Exception:
+        pass
+    return None
+
 # Agent roster — each agent has a role, emoji, color, and assigned crons/tasks
 AGENTS = {
     "Jarvis": {
@@ -260,6 +274,9 @@ def generate():
     pending_cards = "".join(task_card(t) for t in pending)
     done_cards = "".join(task_card(t) for t in done[:4])
 
+    paperclip_url = load_paperclip_public_url()
+    paperclip_link = f'<a href="{paperclip_url}" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>' if paperclip_url else ''
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -423,6 +440,7 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
+    {paperclip_link}
 </div>
 
 <!-- KPI Strip -->
