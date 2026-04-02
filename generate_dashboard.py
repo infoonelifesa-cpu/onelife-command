@@ -423,7 +423,6 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
-    <a href="https://6d023abb-7f0b-4cd8-9fb3-2d0417166b32.cfargotunnel.com" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>
 </div>
 
 <!-- KPI Strip -->
