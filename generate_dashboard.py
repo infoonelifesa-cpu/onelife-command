@@ -438,6 +438,7 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 
 <div class="link-bar">
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
+    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/cash-integrity.html">🔒 Cash Integrity</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
     {paperclip_link}
