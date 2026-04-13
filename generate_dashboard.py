@@ -275,7 +275,11 @@ def generate():
     done_cards = "".join(task_card(t) for t in done[:4])
 
     paperclip_url = load_paperclip_public_url()
-    paperclip_link = f'<a href="{paperclip_url}" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>' if paperclip_url else ''
+    paperclip_link = (
+        f'<a class="paperclip-link" href="{paperclip_url}" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>'
+        if paperclip_url else
+        '<span class="paperclip-link paperclip-offline">📎 Paperclip offline</span>'
+    )
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -393,11 +397,20 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 .org-node small{{display:block;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:2px}}
 
 /* Links */
-.link-bar{{display:flex;gap:10px;justify-content:center;margin:20px 0;flex-wrap:wrap}}
+.link-bar{{display:flex;gap:10px;justify-content:center;align-items:center;margin:20px 0;flex-wrap:wrap}}
 .link-bar a{{
     color:#94a3b8;text-decoration:none;font-size:12px;padding:8px 16px;
     background:#0d0d1a;border:1px solid #1e1e2e;border-radius:10px;
     transition:all 0.2s
+}}
+.link-bar .paperclip-link{{
+    color:#00ff88;background:#00ff8810;border:1px solid #00ff8840;font-weight:700;
+}}
+.link-bar .paperclip-offline{{
+    color:#f59e0b;background:#f59e0b10;border:1px solid #f59e0b40;font-weight:700;
+}}
+.link-bar span{{
+    font-size:12px;padding:8px 16px;border-radius:10px;display:inline-block;
 }}
 .link-bar a:hover{{background:#1e1e2e;color:#f1f5f9;border-color:#2d2d3d}}
 
@@ -415,6 +428,9 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 }}
 
 @media(max-width:768px){{
+    .link-bar{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+    .link-bar a,.link-bar span{{display:block;text-align:center;width:100%}}
+    .link-bar .paperclip-link{{grid-column:1/-1}}
     .agents-grid{{grid-template-columns:1fr}}
     .task-board{{grid-template-columns:1fr}}
     .seo-grid{{grid-template-columns:repeat(2,1fr)}}
@@ -437,11 +453,11 @@ td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
 </div>
 
 <div class="link-bar">
+    {paperclip_link}
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/cash-integrity.html">🔒 Cash Integrity</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
     <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
-    {paperclip_link}
 </div>
 
 <!-- KPI Strip -->
