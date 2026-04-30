@@ -166,7 +166,7 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 <div class="header">
     <h1>COMMAND CENTER</h1>
     <div class="subtitle">Onelife Health · Mission Control</div>
-    <div class="timestamp">SYS.TIME 2026-04-30 12:57:57 SAST // ALL SYSTEMS ALERT</div>
+    <div class="timestamp">SYS.TIME 2026-04-30 13:03:07 SAST // ALL SYSTEMS ALERT</div>
 </div>
 
 <div class="link-bar">
@@ -183,8 +183,8 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
     <div class="kpi" style="--accent:#64748b"><div class="kpi-val" style="color:#64748b">5</div><div class="kpi-lbl">Pending</div></div>
     <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">0</div><div class="kpi-lbl">Blocked</div></div>
     <div class="kpi" style="--accent:#22c55e"><div class="kpi-val" style="color:#22c55e">3</div><div class="kpi-lbl">Done</div></div>
-    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">34<span style="font-size:16px;color:#404040">/43</span></div><div class="kpi-lbl">Crons</div></div>
-    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">5</div><div class="kpi-lbl">Errors</div></div>
+    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">35<span style="font-size:16px;color:#404040">/43</span></div><div class="kpi-lbl">Crons</div></div>
+    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">4</div><div class="kpi-lbl">Errors</div></div>
 </div>
 
 <!-- Org Hierarchy -->
@@ -225,18 +225,18 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             </div>
             <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Whoop Daily Briefing  <span class="cron-time">23h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Google Reviews Check <span class="cron-time">18h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Jarvis: Onelife Email <span class="cron-time">7h ago</span></div></div>
         </div>
-        <div class="agent-card pulse-error" style="border-color:#8b5cf633;">
+        <div class="agent-card " style="border-color:#8b5cf633;">
             <div class="agent-avatar" style="background:#8b5cf615;border:2px solid #8b5cf6">
                 <span class="agent-emoji">👻</span>
-                <div class="status-dot" style="background:#ef4444"></div>
+                <div class="status-dot" style="background:#64748b"></div>
             </div>
             <div class="agent-info">
                 <div class="agent-name" style="color:#8b5cf6">Ghost</div>
                 <div class="agent-role">DevOps / Building</div>
                 <div class="agent-desc">Omni-Shopify sync, dashboards, builds. Silent, reliable, runs when you're sleeping.</div>
-                <div class="agent-status" style="color:#ef4444">ERROR</div>
+                <div class="agent-status" style="color:#64748b">STANDBY</div>
             </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#ef4444">✗</span> Ghost: Omni-Shopify Sync <span class="cron-time">4h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Intelligence D <span class="cron-time">17h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Morning Dashboard <span class="cron-time">6h ago</span></div></div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Omni-Shopify Sync <span class="cron-time">3m ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Intelligence D <span class="cron-time">18h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Ghost: Morning Dashboard <span class="cron-time">6h ago</span></div></div>
         </div>
         <div class="agent-card " style="border-color:#3b82f633;">
             <div class="agent-avatar" style="background:#3b82f615;border:2px solid #3b82f6">
@@ -325,18 +325,18 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
     <table>
         <thead><tr><th>Agent</th><th>Job</th><th>Model</th><th>Last Run</th><th>Next</th><th>Status</th></tr></thead>
         <tbody><tr>
-            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
-            <td class="cron-name">Ghost: Omni-Shopify Sync</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
-            <td style="color:#94a3b8;font-size:12px">4h ago</td>
-            <td style="font-size:12px">2m</td>
-            <td><span class="status-pill" style="background:#ef4444">error</span></td>
-        </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
             <td class="cron-name">Whoop Daily Briefing </td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
             <td style="color:#94a3b8;font-size:12px">23h ago</td>
-            <td style="font-size:12px">1h</td>
+            <td style="font-size:12px">57m</td>
+            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
+            <td class="cron-name">Ghost: Omni-Shopify Sync</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
+            <td style="color:#94a3b8;font-size:12px">3m ago</td>
+            <td style="font-size:12px">4h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
@@ -349,8 +349,8 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td><span class="agent-badge" style="background:#8b5cf620;color:#8b5cf6">👻 Ghost</span></td>
             <td class="cron-name">Ghost: Intelligence D</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
-            <td style="color:#94a3b8;font-size:12px">17h ago</td>
-            <td style="font-size:12px">7h</td>
+            <td style="color:#94a3b8;font-size:12px">18h ago</td>
+            <td style="font-size:12px">6h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
@@ -468,8 +468,8 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
             <td class="cron-name">Jarvis: Morning Task </td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
-            <td style="color:#94a3b8;font-size:12px">5h ago</td>
-            <td style="font-size:12px">19h</td>
+            <td style="color:#94a3b8;font-size:12px">6h ago</td>
+            <td style="font-size:12px">18h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
