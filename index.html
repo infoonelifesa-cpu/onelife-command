@@ -166,7 +166,7 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
 <div class="header">
     <h1>COMMAND CENTER</h1>
     <div class="subtitle">Onelife Health · Mission Control</div>
-    <div class="timestamp">SYS.TIME 2026-05-06 19:15:57 SAST // ALL SYSTEMS ALERT</div>
+    <div class="timestamp">SYS.TIME 2026-05-06 19:21:01 SAST // ALL SYSTEMS ALERT</div>
 </div>
 
 <div class="link-bar">
@@ -183,8 +183,8 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
     <div class="kpi" style="--accent:#64748b"><div class="kpi-val" style="color:#64748b">5</div><div class="kpi-lbl">Pending</div></div>
     <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">0</div><div class="kpi-lbl">Blocked</div></div>
     <div class="kpi" style="--accent:#22c55e"><div class="kpi-val" style="color:#22c55e">3</div><div class="kpi-lbl">Done</div></div>
-    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">25<span style="font-size:16px;color:#404040">/30</span></div><div class="kpi-lbl">Crons</div></div>
-    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">1</div><div class="kpi-lbl">Errors</div></div>
+    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:#ef4444">23<span style="font-size:16px;color:#404040">/30</span></div><div class="kpi-lbl">Crons</div></div>
+    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">3</div><div class="kpi-lbl">Errors</div></div>
 </div>
 
 <!-- Org Hierarchy -->
@@ -223,7 +223,7 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
                 <div class="agent-desc">Orchestrates everything. Main session, strategic decisions, Naadir's right hand.</div>
                 <div class="agent-status" style="color:#ef4444">ERROR</div>
             </div>
-            <div class="agent-feed"><div class="agent-cron"><span style="color:#22c55e">✓</span> Google Reviews Check <span class="cron-time">24h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Paperclip: Backlog Guard <span class="cron-time">12h ago</span></div><div class="agent-cron"><span style="color:#64748b">○</span> Paperclip Backlog Gua... at 2026 <span class="cron-time"></span></div></div>
+            <div class="agent-feed"><div class="agent-cron"><span style="color:#64748b">○</span> Paperclip Backlog Gua... at 2026 <span class="cron-time"></span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Jarvis: Onelife Email <span class="cron-time">13h ago</span></div><div class="agent-cron"><span style="color:#22c55e">✓</span> Discovery Engine: BUY <span class="cron-time">1d ago</span></div></div>
         </div>
         <div class="agent-card " style="border-color:#8b5cf633;">
             <div class="agent-avatar" style="background:#8b5cf615;border:2px solid #8b5cf6">
@@ -326,31 +326,17 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
         <thead><tr><th>Agent</th><th>Job</th><th>Model</th><th>Last Run</th><th>Next</th><th>Status</th></tr></thead>
         <tbody><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Google Reviews Check</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
-            <td style="color:#94a3b8;font-size:12px">24h ago</td>
-            <td style="font-size:12px">4m</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
-            <td class="cron-name">Paperclip: Backlog Guard</td>
-            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
-            <td style="color:#94a3b8;font-size:12px">12h ago</td>
-            <td style="font-size:12px">4m</td>
-            <td><span class="status-pill" style="background:#22c55e">ok</span></td>
-        </tr><tr>
-            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
             <td class="cron-name">Paperclip Backlog Gua... at 2026-05-06 17:25Z</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
             <td style="color:#94a3b8;font-size:12px"></td>
-            <td style="font-size:12px">9m</td>
+            <td style="font-size:12px">4m</td>
             <td><span class="status-pill" style="background:#64748b">idle</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
             <td class="cron-name">Jarvis: Onelife Email</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
             <td style="color:#94a3b8;font-size:12px">13h ago</td>
-            <td style="font-size:12px">44m</td>
+            <td style="font-size:12px">39m</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
@@ -395,6 +381,13 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td style="font-size:12px">12h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
         </tr><tr>
+            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td class="cron-name">Paperclip: Backlog Guard</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
+            <td style="color:#94a3b8;font-size:12px"><1m ago</td>
+            <td style="font-size:12px">12h</td>
+            <td><span class="status-pill" style="background:#ef4444">error</span></td>
+        </tr><tr>
             <td><span class="agent-badge" style="background:#ec489920;color:#ec4899">✨ Nova</span></td>
             <td class="cron-name">Nova: Daily TikTok An</td>
             <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
@@ -422,6 +415,13 @@ td{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}
             <td style="color:#94a3b8;font-size:12px">3h ago</td>
             <td style="font-size:12px">15h</td>
             <td><span class="status-pill" style="background:#22c55e">ok</span></td>
+        </tr><tr>
+            <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
+            <td class="cron-name">Google Reviews Check</td>
+            <td style="color:#94a3b8;font-size:12px">gpt-5.5</td>
+            <td style="color:#94a3b8;font-size:12px">1m ago</td>
+            <td style="font-size:12px">24h</td>
+            <td><span class="status-pill" style="background:#ef4444">error</span></td>
         </tr><tr>
             <td><span class="agent-badge" style="background:#00ff8820;color:#00ff88">🦞 Jarvis</span></td>
             <td class="cron-name">Discovery Engine: BUILD</td>
