@@ -1,165 +1,400 @@
 #!/usr/bin/env python3
 """
-Onelife Command Center — Mission Control
-Animated agents, live cron status, activity feed, task board.
+Onelife Command Center — clean executive operations console.
+
+This generator intentionally avoids the old neon/gamer treatment. The page should
+read like a useful owner dashboard: crisp hierarchy, strong contrast, compact
+cards, and fast scanning on mobile and desktop.
 """
 
-import json, os, subprocess
+import html as html_lib
+import json
+import os
+import subprocess
 from datetime import datetime, timezone, timedelta
+from string import Template
 
 SAST = timezone(timedelta(hours=2))
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE = os.path.expanduser("~/.openclaw/workspace")
 
 
-def load_paperclip_public_url():
-    path = os.path.join(WORKSPACE, "memory", "paperclip_public_url.json")
-    try:
-        with open(path) as f:
-            data = json.load(f)
-        url = str(data.get("url") or "").strip()
-        status = str(data.get("status") or "").strip().lower()
-        if url and status == "live":
-            return url
-    except Exception:
-        pass
-    return None
-
-# Agent roster — each agent has a role, emoji, color, and assigned crons/tasks
 AGENTS = {
     "Jarvis": {
-        "emoji": "🦞", "color": "#00ff88", "role": "CEO / Orchestrator",
-        "desc": "Orchestrates everything. Main session, strategic decisions, Naadir's right hand.",
-        "owns": ["Overnight Opportunity Engine", "Heartbeat"]
+        "emoji": "🦞",
+        "color": "#0f8a52",
+        "role": "CEO / Orchestrator",
+        "desc": "Owns prioritisation, handoffs, and the operator layer around Naadir.",
+        "owns": ["Overnight Opportunity Engine", "Heartbeat"],
     },
     "Ghost": {
-        "emoji": "👻", "color": "#8b5cf6", "role": "DevOps / Building",
-        "desc": "Omni-Shopify sync, dashboards, builds. Silent, reliable, runs when you're sleeping.",
-        "owns": ["Morning Dashboard", "Evening Dashboard", "Intelligence Dashboard",
-                 "Evening Intelligence", "Omni Cache Refresh", "Omni-Shopify Sync", "Paperclip Loop"]
+        "emoji": "👻",
+        "color": "#6d5dfc",
+        "role": "DevOps / Building",
+        "desc": "Keeps dashboards, syncs, builds, and routine plumbing alive.",
+        "owns": [
+            "Morning Dashboard",
+            "Evening Dashboard",
+            "Intelligence Dashboard",
+            "Evening Intelligence",
+            "Omni Cache Refresh",
+            "Omni-Shopify Sync",
+            "Paperclip Loop",
+        ],
     },
     "Scout": {
-        "emoji": "🔭", "color": "#3b82f6", "role": "Intelligence / Research",
-        "desc": "SEO reports, competitor analysis, market scanning. Finds the opportunities.",
-        "owns": ["Weekly SEO Report", "Competitive Price Scan", "Business Opportunity",
-                 "SEO Gap Finder", "Review Miner", "Product Trend Scanner",
-                 "Weekly Competitor Pricing", "Weekly Intel Brief", "Paperclip Loop"]
+        "emoji": "🔭",
+        "color": "#2563eb",
+        "role": "Intelligence / Research",
+        "desc": "Finds competitors, pricing moves, SEO gaps, and market signals.",
+        "owns": [
+            "Weekly SEO Report",
+            "Competitive Price Scan",
+            "Business Opportunity",
+            "SEO Gap Finder",
+            "Review Miner",
+            "Product Trend Scanner",
+            "Weekly Competitor Pricing",
+            "Weekly Intel Brief",
+            "Paperclip Loop",
+        ],
     },
     "Cipher": {
-        "emoji": "🔐", "color": "#f59e0b", "role": "CTO / Engineering",
-        "desc": "Conversion reports, autoresearch experiments, analytics infrastructure. The numbers brain.",
-        "owns": ["Friday Close-Out", "Weekly Conversion Report", "Weekly Onelife Edit",
-                 "Autoresearch Experiments", "Autoresearch Morning Report", "Paperclip Loop"]
+        "emoji": "🔐",
+        "color": "#c47a00",
+        "role": "CTO / Engineering",
+        "desc": "Analytics, experiments, conversion checks, and technical strategy.",
+        "owns": [
+            "Friday Close-Out",
+            "Weekly Conversion Report",
+            "Weekly Onelife Edit",
+            "Autoresearch Experiments",
+            "Autoresearch Morning Report",
+            "Paperclip Loop",
+        ],
     },
     "Nova": {
-        "emoji": "✨", "color": "#ec4899", "role": "CMO / Marketing",
-        "desc": "TikTok batches, ad pipeline, blog posts, creative output. The maker.",
-        "owns": ["Sunday TikTok Batch", "Daily TikTok Analytics", "Weekly Ad Pipeline",
-                 "Biweekly Blog Post", "Monthly Blog Campaign", "Paperclip Loop"]
+        "emoji": "✨",
+        "color": "#db2777",
+        "role": "CMO / Marketing",
+        "desc": "Creative output, TikTok batches, ads, blogs, and campaigns.",
+        "owns": [
+            "Sunday TikTok Batch",
+            "Daily TikTok Analytics",
+            "Weekly Ad Pipeline",
+            "Biweekly Blog Post",
+            "Monthly Blog Campaign",
+            "Paperclip Loop",
+        ],
     },
     "Vivid": {
-        "emoji": "💚", "color": "#22c55e", "role": "Brand PM",
-        "desc": "Vivid Health brand turnaround. Product descriptions, collection pages, bundles, website, social. Dedicated to making the house brand shine.",
-        "owns": []
+        "emoji": "💚",
+        "color": "#16a34a",
+        "role": "Brand PM",
+        "desc": "Dedicated owner for the Vivid Health turnaround and product polish.",
+        "owns": [],
     },
     "Sage": {
-        "emoji": "🧙", "color": "#a855f7", "role": "Deep Analysis",
-        "desc": "MiroShark simulations, deep business analysis, expert panels. The strategic thinker.",
-        "owns": ["Paperclip Loop"]
+        "emoji": "🧙",
+        "color": "#9333ea",
+        "role": "Deep Analysis",
+        "desc": "Simulations, expert panels, and deeper business reasoning.",
+        "owns": ["Paperclip Loop"],
     },
     "Kimi": {
-        "emoji": "🌙", "color": "#06b6d4", "role": "Compaction / Fallback",
-        "desc": "Context compression, emergency model fallback. The efficiency expert.",
-        "owns": []
+        "emoji": "🌙",
+        "color": "#0891b2",
+        "role": "Compaction / Fallback",
+        "desc": "Context compression, fallback runs, and long-context efficiency.",
+        "owns": [],
     },
 }
 
 
-def load_tasks():
+STATUS_META = {
+    "ok": {"label": "OK", "class": "ok", "icon": "✓"},
+    "active": {"label": "Active", "class": "active", "icon": "●"},
+    "idle": {"label": "Standby", "class": "idle", "icon": "○"},
+    "stale": {"label": "Stale", "class": "warn", "icon": "!"},
+    "error": {"label": "Error", "class": "danger", "icon": "!"},
+    "unknown": {"label": "Unknown", "class": "idle", "icon": "?"},
+}
+
+
+def esc(value):
+    if value is None:
+        return ""
+    return html_lib.escape(str(value), quote=True)
+
+
+def truncate(value, limit):
+    text = str(value or "")
+    return text if len(text) <= limit else text[: max(0, limit - 1)].rstrip() + "…"
+
+
+def load_json(path, fallback):
     try:
-        with open(os.path.join(WORKSPACE, "memory/active-tasks.json")) as f:
-            return json.load(f).get("tasks", [])
-    except:
-        return []
+        with open(path) as f:
+            return json.load(f)
+    except Exception:
+        return fallback
+
+
+def load_paperclip_public_url():
+    data = load_json(os.path.join(WORKSPACE, "memory", "paperclip_public_url.json"), {})
+    url = str(data.get("url") or "").strip()
+    status = str(data.get("status") or "").strip().lower()
+    return url if url and status == "live" else None
+
+
+def load_tasks():
+    data = load_json(os.path.join(WORKSPACE, "memory", "active-tasks.json"), {"tasks": []})
+    return data.get("tasks", []) if isinstance(data, dict) else []
 
 
 def load_cron_jobs():
     try:
-        result = subprocess.run(["openclaw", "cron", "list"], capture_output=True, text=True, timeout=15)
-        lines = result.stdout.strip().split("\n")
-        if len(lines) < 2:
-            return []
-        jobs = []
-        for line in lines[1:]:
-            parts = line.split()
-            if len(parts) < 3:
-                continue
-            job_id = parts[0]
-
-            # Extract status
-            status = "unknown"
-            for p in parts:
-                if p in ("ok", "error", "stale", "idle"):
-                    status = p
-                    break
-
-            # Full name from the line (between ID and 'cron')
-            idx_cron = line.find("cron ")
-            if idx_cron == -1:
-                idx_cron = line.find("  ", 40)
-            name = line[len(job_id):idx_cron].strip().rstrip(".")
-
-            # Next/last run
-            next_run = ""
-            last_run = ""
-            for i, p in enumerate(parts):
-                if p == "in" and i + 1 < len(parts):
-                    next_run = parts[i + 1]
-                if p.endswith("ago") and i > 0:
-                    last_run = parts[i - 1] + " " + p
-
-            # Model
-            model = ""
-            for p in parts:
-                if "/" in p and any(m in p for m in ["kimi", "claude", "gpt", "moonshot", "sonnet"]):
-                    model = p.split("/")[-1]
-
-            jobs.append({
-                "id": job_id, "name": name, "status": status,
-                "next": next_run, "last": last_run, "model": model
-            })
-        return jobs
-    except:
+        result = subprocess.run(
+            ["openclaw", "cron", "list"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            check=False,
+        )
+    except Exception:
         return []
+
+    lines = [line.rstrip() for line in result.stdout.splitlines() if line.strip()]
+    if len(lines) < 2:
+        return []
+
+    jobs = []
+    for line in lines[1:]:
+        parts = line.split()
+        if len(parts) < 2:
+            continue
+
+        job_id = parts[0]
+        status = "unknown"
+        for token in parts:
+            if token in ("ok", "error", "stale", "idle"):
+                status = token
+                break
+
+        # Name is the text between the id and the schedule/status columns.
+        idx_cron = line.find(" cron ")
+        idx_every = line.find(" every ")
+        cut_points = [idx for idx in (idx_cron, idx_every) if idx != -1]
+        cut = min(cut_points) if cut_points else max(line.find("  ", len(job_id)), len(job_id))
+        name = line[len(job_id):cut].strip().rstrip(".") or job_id
+
+        next_run = ""
+        last_run = ""
+        for i, token in enumerate(parts):
+            if token == "in" and i + 1 < len(parts):
+                next_run = parts[i + 1]
+            if token.endswith("ago") and i > 0:
+                last_run = f"{parts[i - 1]} {token}"
+
+        model = ""
+        for token in parts:
+            if "/" in token and any(m in token for m in ("kimi", "claude", "gpt", "moonshot", "sonnet")):
+                model = token.split("/")[-1]
+
+        jobs.append(
+            {
+                "id": job_id,
+                "name": name,
+                "status": status,
+                "next": next_run or "—",
+                "last": last_run or "—",
+                "model": model,
+            }
+        )
+    return jobs
 
 
 def match_agent(job_name):
-    """Match a cron job to its owning agent.
-    Strategy 1: parse 'AgentName: ...' prefix (works for all current crons).
-    Strategy 2: fuzzy match against owns arrays as fallback.
-    """
     if ":" in job_name:
-        prefix = job_name.split(":")[0].strip()
+        prefix = job_name.split(":", 1)[0].strip()
         if prefix in AGENTS:
             return prefix
-    jn = job_name.lower()
+
+    lowered = job_name.lower()
     for agent, info in AGENTS.items():
         for pattern in info["owns"]:
-            pl = pattern.lower()
-            if pl in jn or jn.startswith(pl[:15]):
+            p = pattern.lower()
+            if p in lowered or lowered.startswith(p[:15]):
                 return agent
-    return "Jarvis"  # default
+    return "Jarvis"
 
 
 def load_seo_stats():
-    try:
-        with open(os.path.join(WORKSPACE, "command-center/status.json")) as f:
-            d = json.load(f).get("seo", {})
-            if any(v for v in d.values()):
-                return d
-    except:
-        pass
+    data = load_json(os.path.join(WORKSPACE, "command-center", "status.json"), {})
+    seo = data.get("seo", {}) if isinstance(data, dict) else {}
+    if isinstance(seo, dict) and any(seo.values()):
+        return seo
     return {"blog_posts": 17, "image_alts": 8397, "product_descriptions": 2108, "guide_pages": 3}
+
+
+def normalise_stale_cron_errors(crons):
+    for cron in crons:
+        last = cron.get("last", "")
+        if cron.get("status") == "error" and any(x in last for x in ("2d", "3d", "4d", "5d", "6d", "7d", "1w", "2w")):
+            cron["status"] = "stale"
+
+
+def agent_status(agent, crons):
+    owned = [c for c in crons if match_agent(c["name"]) == agent]
+    if any(c["status"] == "error" for c in owned):
+        return "error"
+    if any("ago" in c.get("last", "") and ("min" in c["last"] or "1h" in c["last"] or "2h" in c["last"]) for c in owned):
+        return "active"
+    return "idle"
+
+
+def status_pill(status):
+    meta = STATUS_META.get(status, STATUS_META["unknown"])
+    return f'<span class="pill {meta["class"]}">{esc(meta["label"])}</span>'
+
+
+def render_link_bar(paperclip_url):
+    paperclip = (
+        f'<a class="primary-link" href="{esc(paperclip_url)}" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>'
+        if paperclip_url
+        else '<span class="primary-link muted">📎 Paperclip offline</span>'
+    )
+    links = [
+        paperclip,
+        '<a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary</a>',
+        '<a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/cash-integrity.html">🔒 Cash Integrity</a>',
+        '<a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>',
+        '<a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>',
+    ]
+    return "\n".join(links)
+
+
+def render_kpi_cards(active, pending, blocked, done, cron_ok, cron_total, cron_err):
+    cards = [
+        ("Active tasks", len(active), "blue", "Currently moving"),
+        ("Pending", len(pending), "slate", "Waiting their turn"),
+        ("Blocked", len(blocked), "red", "Needs attention"),
+        ("Completed", len(done), "green", "Closed items"),
+        ("Cron health", f"{cron_ok}/{cron_total}", "green" if cron_err == 0 else "red", "Healthy automations" if cron_err == 0 else "Automation alerts"),
+        ("Errors", cron_err, "red" if cron_err else "green", "Active failures" if cron_err else "No active failures"),
+    ]
+    return "\n".join(
+        f'''
+        <article class="kpi-card accent-{tone}">
+            <div class="kpi-label">{esc(label)}</div>
+            <div class="kpi-value">{esc(value)}</div>
+            <div class="kpi-note">{esc(note)}</div>
+        </article>'''
+        for label, value, tone, note in cards
+    )
+
+
+def render_agent_cards(crons):
+    cards = []
+    for agent, info in AGENTS.items():
+        owned = [c for c in crons if match_agent(c["name"]) == agent]
+        status = agent_status(agent, crons)
+        meta = STATUS_META["active" if status == "active" else status]
+        recent = owned[:3]
+        if recent:
+            activity = "\n".join(
+                f'''
+                <li>
+                    <span class="activity-dot {STATUS_META.get(c['status'], STATUS_META['unknown'])['class']}">{esc(STATUS_META.get(c['status'], STATUS_META['unknown'])['icon'])}</span>
+                    <span title="{esc(c['name'])}">{esc(truncate(c['name'], 44))}</span>
+                    <time>{esc(c.get('last', '—'))}</time>
+                </li>'''
+                for c in recent
+            )
+        else:
+            activity = '<li class="quiet-line">No cron ownership yet</li>'
+
+        cards.append(
+            f'''
+            <article class="agent-card" style="--agent:{esc(info['color'])}">
+                <div class="agent-topline">
+                    <div class="agent-avatar">{esc(info['emoji'])}</div>
+                    <div>
+                        <h3>{esc(agent)}</h3>
+                        <p>{esc(info['role'])}</p>
+                    </div>
+                    <span class="agent-status {meta['class']}">{esc(meta['label'])}</span>
+                </div>
+                <p class="agent-desc">{esc(info['desc'])}</p>
+                <ul class="activity-list">{activity}</ul>
+            </article>'''
+        )
+    return "\n".join(cards)
+
+
+def render_cron_rows(crons):
+    if not crons:
+        return '<tr><td colspan="6" class="empty-table">Cron list unavailable</td></tr>'
+
+    rows = []
+    for cron in crons:
+        agent = match_agent(cron["name"])
+        info = AGENTS.get(agent, AGENTS["Jarvis"])
+        meta = STATUS_META.get(cron["status"], STATUS_META["unknown"])
+        rows.append(
+            f'''
+            <tr>
+                <td><span class="agent-chip" style="--agent:{esc(info['color'])}">{esc(info['emoji'])} {esc(agent)}</span></td>
+                <td class="job-name">{esc(cron['name'])}</td>
+                <td>{esc(cron.get('model') or '—')}</td>
+                <td>{esc(cron.get('last') or '—')}</td>
+                <td>{esc(cron.get('next') or '—')}</td>
+                <td><span class="pill {meta['class']}">{esc(meta['label'])}</span></td>
+            </tr>'''
+        )
+    return "\n".join(rows)
+
+
+def render_task_card(task):
+    status = task.get("status", "pending")
+    priority = task.get("priority", "MEDIUM")
+    desc = task.get("description", "")[:110]
+    tone = {"active": "blue", "pending": "slate", "blocked": "red", "done": "green"}.get(status, "slate")
+    return f'''
+    <article class="task-card accent-{tone}">
+        <div class="task-meta">
+            <span>{esc(priority)}</span>
+            <span>{esc(task.get('id', '')[:22])}</span>
+        </div>
+        <p>{esc(desc)}</p>
+        {status_pill(status)}
+    </article>'''
+
+
+def render_task_column(title, tasks, empty_text):
+    body = "\n".join(render_task_card(t) for t in tasks) if tasks else f'<div class="empty-state">{esc(empty_text)}</div>'
+    return f'''
+    <section class="task-column">
+        <h3>{esc(title)} <span>{len(tasks)}</span></h3>
+        {body}
+    </section>'''
+
+
+def render_seo_items(seo):
+    items = [
+        ("Blog posts", seo.get("blog_posts", 0)),
+        ("Image alts", f"{int(seo.get('image_alts', 0)):,}" if str(seo.get("image_alts", 0)).isdigit() else seo.get("image_alts", 0)),
+        ("Descriptions", f"{int(seo.get('product_descriptions', 0)):,}" if str(seo.get("product_descriptions", 0)).isdigit() else seo.get("product_descriptions", 0)),
+        ("Guide pages", seo.get("guide_pages", 0)),
+    ]
+    return "\n".join(
+        f'''
+        <article class="mini-stat">
+            <strong>{esc(value)}</strong>
+            <span>{esc(label)}</span>
+        </article>'''
+        for label, value in items
+    )
 
 
 def generate():
@@ -168,6 +403,7 @@ def generate():
 
     tasks = load_tasks()
     crons = load_cron_jobs()
+    normalise_stale_cron_errors(crons)
     seo = load_seo_stats()
 
     active = [t for t in tasks if t.get("status") == "active"]
@@ -175,373 +411,165 @@ def generate():
     blocked = [t for t in tasks if t.get("status") == "blocked"]
     done = [t for t in tasks if t.get("status") == "done"]
 
-    # Stale error detection: if a cron errored >24h ago and hasn't run since,
-    # it's a stale error from a previous run, not an active problem.
-    # Treat as "stale" (warning) not "error" (critical).
-    for c in crons:
-        if c["status"] == "error" and c.get("last", ""):
-            last = c["last"]
-            # If last run was days ago, it's stale
-            if any(x in last for x in ["2d", "3d", "4d", "5d", "6d", "7d", "1w", "2w"]):
-                c["status"] = "stale"
-
-    cron_ok = sum(1 for c in crons if c["status"] in ("ok", "stale"))
-    cron_err = sum(1 for c in crons if c["status"] == "error")
-    cron_idle = sum(1 for c in crons if c["status"] == "idle")
+    cron_ok = sum(1 for c in crons if c.get("status") in ("ok", "stale"))
+    cron_err = sum(1 for c in crons if c.get("status") == "error")
     cron_total = len(crons)
 
-    # Build agent status based on their crons
-    agent_statuses = {}
-    for agent in AGENTS:
-        agent_crons = [c for c in crons if match_agent(c["name"]) == agent]
-        has_error = any(c["status"] == "error" for c in agent_crons)  # only active errors, not stale
-        has_recent = any("ago" in c.get("last", "") and ("min" in c["last"] or "1h" in c["last"] or "2h" in c["last"]) for c in agent_crons)
-        all_ok = all(c["status"] in ("ok", "idle", "stale") for c in agent_crons)
+    system_state = "Action needed" if cron_err else "Healthy"
+    system_class = "danger" if cron_err else "ok"
 
-        if has_error:
-            agent_statuses[agent] = "error"
-        elif has_recent:
-            agent_statuses[agent] = "active"
-        elif all_ok:
-            agent_statuses[agent] = "idle"
-        else:
-            agent_statuses[agent] = "idle"
-
-    # Agent cards HTML
-    agent_cards = ""
-    for agent, info in AGENTS.items():
-        status = agent_statuses.get(agent, "idle")
-        agent_crons = [c for c in crons if match_agent(c["name"]) == agent]
-        status_label = {"active": "ACTIVE", "idle": "STANDBY", "error": "ERROR"}.get(status, "STANDBY")
-        status_color = {"active": "#22c55e", "idle": "#64748b", "error": "#ef4444"}.get(status, "#64748b")
-        pulse_class = "pulse-active" if status == "active" else "pulse-error" if status == "error" else ""
-        glow = f"box-shadow:0 0 20px {info['color']}40,0 0 40px {info['color']}20;" if status == "active" else ""
-
-        # Build mini activity feed for this agent
-        activity = ""
-        for c in agent_crons[:3]:
-            c_col = {"ok": "#22c55e", "error": "#ef4444", "idle": "#64748b"}.get(c["status"], "#64748b")
-            c_icon = {"ok": "✓", "error": "✗", "idle": "○"}.get(c["status"], "·")
-            activity += f'<div class="agent-cron"><span style="color:{c_col}">{c_icon}</span> {c["name"][:32]} <span class="cron-time">{c.get("last", "—")}</span></div>'
-
-        agent_cards += f"""
-        <div class="agent-card {pulse_class}" style="border-color:{info['color']}33;{glow}">
-            <div class="agent-avatar" style="background:{info['color']}15;border:2px solid {info['color']}">
-                <span class="agent-emoji">{info['emoji']}</span>
-                <div class="status-dot" style="background:{status_color}"></div>
-            </div>
-            <div class="agent-info">
-                <div class="agent-name" style="color:{info['color']}">{agent}</div>
-                <div class="agent-role">{info['role']}</div>
-                <div class="agent-desc">{info['desc']}</div>
-                <div class="agent-status" style="color:{status_color}">{status_label}</div>
-            </div>
-            <div class="agent-feed">{activity}</div>
-        </div>"""
-
-    # Cron timeline
-    cron_rows = ""
-    for c in crons:
-        agent = match_agent(c["name"])
-        a_info = AGENTS.get(agent, AGENTS["Jarvis"])
-        s_col = {"ok": "#22c55e", "error": "#ef4444", "idle": "#64748b", "stale": "#eab308"}.get(c["status"], "#64748b")
-        cron_rows += f"""<tr>
-            <td><span class="agent-badge" style="background:{a_info['color']}20;color:{a_info['color']}">{a_info['emoji']} {agent}</span></td>
-            <td class="cron-name">{c['name']}</td>
-            <td style="color:#94a3b8;font-size:12px">{c.get('model','')}</td>
-            <td style="color:#94a3b8;font-size:12px">{c.get('last','—')}</td>
-            <td style="font-size:12px">{c.get('next','—')}</td>
-            <td><span class="status-pill" style="background:{s_col}">{c['status']}</span></td>
-        </tr>"""
-
-    # Task board
-    def task_card(t):
-        s = t.get("status", "pending")
-        p = t.get("priority", "MEDIUM")
-        s_col = {"active": "#3b82f6", "pending": "#64748b", "blocked": "#ef4444", "done": "#22c55e"}.get(s, "#64748b")
-        p_col = {"HIGH": "#ef4444", "MEDIUM": "#eab308", "LOW": "#22c55e"}.get(p, "#64748b")
-        desc = t.get("description", "")[:65]
-        return f"""<div class="task-card" style="border-left:3px solid {s_col}">
-            <div class="task-header">
-                <span class="priority-dot" style="background:{p_col}"></span>
-                <span class="task-id">{t.get('id','')[:20]}</span>
-            </div>
-            <div class="task-desc">{desc}</div>
-            <span class="status-pill" style="background:{s_col}">{s}</span>
-        </div>"""
-
-    active_cards = "".join(task_card(t) for t in active)
-    pending_cards = "".join(task_card(t) for t in pending)
-    done_cards = "".join(task_card(t) for t in done[:4])
-
-    paperclip_url = load_paperclip_public_url()
-    paperclip_link = (
-        f'<a class="paperclip-link" href="{paperclip_url}" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>'
-        if paperclip_url else
-        '<span class="paperclip-link paperclip-offline">📎 Paperclip offline</span>'
-    )
-
-    html = f"""<!DOCTYPE html>
+    html = Template(
+        """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="refresh" content="1800">
-<title>Command Center | {now.strftime('%d %b')}</title>
+<title>Onelife Command Center | $title_date</title>
 <style>
-*{{box-sizing:border-box;margin:0;padding:0}}
-body{{background:#06060f;color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}}
-
-/* Animated grid background */
-body::before{{
-    content:'';position:fixed;top:0;left:0;width:100%;height:100%;
-    background:
-        linear-gradient(rgba(0,255,136,0.03) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,255,136,0.03) 1px,transparent 1px);
-    background-size:60px 60px;
-    animation:grid-drift 20s linear infinite;
-    pointer-events:none;z-index:0
-}}
-@keyframes grid-drift{{0%{{transform:translate(0,0)}}100%{{transform:translate(60px,60px)}}}}
-
-.container{{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1}}
-
-/* Header */
-.header{{text-align:center;padding:30px 0 20px;margin-bottom:24px;position:relative}}
-.header h1{{font-size:36px;font-weight:900;letter-spacing:2px;color:#00ff88;text-shadow:0 0 30px #00ff8840}}
-.header .subtitle{{font-size:14px;color:#64748b;margin-top:6px;letter-spacing:4px;text-transform:uppercase}}
-.header .timestamp{{font-size:11px;color:#2d2d3d;margin-top:8px;font-family:'Courier New',monospace}}
-.header::after{{
-    content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;
-    background:linear-gradient(90deg,transparent,#00ff8840,transparent)
-}}
-
-/* KPI Strip */
-.kpi-strip{{display:flex;gap:12px;margin-bottom:24px;justify-content:center;flex-wrap:wrap}}
-.kpi{{background:#0d0d1a;border:1px solid #1e1e2e;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px;position:relative;overflow:hidden}}
-.kpi::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}}
-.kpi-val{{font-size:32px;font-weight:800}}
-.kpi-lbl{{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-top:4px}}
-
-/* Agent Cards */
-.agents-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:24px}}
-.agent-card{{
-    background:#0d0d1a;border:1px solid #1e1e2e;border-radius:16px;padding:20px;
-    display:grid;grid-template-columns:72px 1fr;grid-template-rows:auto auto;gap:12px;
-    transition:all 0.3s ease;position:relative;overflow:hidden
-}}
-.agent-card:hover{{transform:translateY(-2px);border-color:#2d2d3d}}
-.agent-avatar{{
-    width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    position:relative;grid-row:1/2
-}}
-.agent-emoji{{font-size:28px}}
-.status-dot{{
-    position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;
-    border:2px solid #0d0d1a
-}}
-.agent-info{{grid-row:1/2}}
-.agent-name{{font-size:18px;font-weight:700;letter-spacing:0.5px}}
-.agent-role{{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-top:2px}}
-.agent-desc{{font-size:12px;color:#64748b;margin-top:6px;line-height:1.4}}
-.agent-status{{font-size:11px;font-weight:700;letter-spacing:2px;margin-top:8px}}
-.agent-feed{{grid-column:1/-1;border-top:1px solid #1e1e2e;padding-top:10px}}
-.agent-cron{{font-size:12px;color:#94a3b8;padding:3px 0;display:flex;gap:6px;align-items:center}}
-.cron-time{{margin-left:auto;font-size:11px;color:#404040;font-family:monospace}}
-
-/* Pulse animations */
-.pulse-active{{animation:pulse-glow 2s ease-in-out infinite}}
-.pulse-error{{animation:pulse-error 1.5s ease-in-out infinite}}
-@keyframes pulse-glow{{
-    0%,100%{{box-shadow:0 0 5px transparent}}
-    50%{{box-shadow:0 0 20px rgba(0,255,136,0.15)}}
-}}
-@keyframes pulse-error{{
-    0%,100%{{box-shadow:0 0 5px transparent}}
-    50%{{box-shadow:0 0 20px rgba(239,68,68,0.2)}}
-}}
-
-/* Cron Table */
-.section{{background:#0d0d1a;border:1px solid #1e1e2e;border-radius:16px;padding:24px;margin-bottom:20px}}
-.section-title{{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}}
-.section-title::after{{content:'';flex:1;height:1px;background:#1e1e2e}}
-table{{width:100%;border-collapse:collapse}}
-th{{font-size:10px;color:#404040;text-align:left;padding:10px 8px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #1e1e2e}}
-td{{padding:12px 8px;border-bottom:1px solid #0f0f1a;font-size:13px}}
-.cron-name{{max-width:400px;word-break:break-word}}
-.agent-badge{{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}}
-.status-pill{{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px}}
-
-/* Task Board */
-.task-board{{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}}
-.task-column-header{{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:2px;padding:8px 0;margin-bottom:8px;border-bottom:1px solid #1e1e2e}}
-.task-card{{background:#0a0a14;border-radius:10px;padding:14px;margin-bottom:8px;transition:all 0.2s}}
-.task-card:hover{{background:#12121f}}
-.task-header{{display:flex;align-items:center;gap:8px;margin-bottom:8px}}
-.priority-dot{{width:8px;height:8px;border-radius:50%;flex-shrink:0}}
-.task-id{{font-size:11px;color:#64748b;font-family:monospace}}
-.task-desc{{font-size:13px;line-height:1.4;margin-bottom:8px;color:#cbd5e1}}
-
-/* SEO */
-.seo-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}}
-.seo-item{{background:#0a0a14;border-radius:10px;padding:16px;text-align:center}}
-.seo-num{{font-size:24px;font-weight:800;color:#818cf8}}
-.seo-lbl{{font-size:10px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:1px}}
-
-/* Org Chart */
-.org-chart{{background:#0d0d1a;border:1px solid #1e1e2e;border-radius:16px;padding:24px 24px 16px;margin-bottom:20px;text-align:center}}
-.org-chart-title{{font-size:11px;font-weight:700;color:#404040;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}}
-.org-ceo{{display:inline-flex;align-items:center;gap:12px;background:#00ff8808;border:2px solid #00ff8830;border-radius:12px;padding:12px 28px;margin-bottom:0}}
-.org-reports{{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}}
-.org-node{{background:#0a0a14;border:1px solid #1e1e2e;border-top-width:3px;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#cbd5e1;min-width:90px;text-align:center;line-height:1.5}}
-.org-node small{{display:block;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:2px}}
-
-/* Links */
-.link-bar{{display:flex;gap:10px;justify-content:center;align-items:center;margin:20px 0;flex-wrap:wrap}}
-.link-bar a{{
-    color:#94a3b8;text-decoration:none;font-size:12px;padding:8px 16px;
-    background:#0d0d1a;border:1px solid #1e1e2e;border-radius:10px;
-    transition:all 0.2s
-}}
-.link-bar .paperclip-link{{
-    color:#00ff88;background:#00ff8810;border:1px solid #00ff8840;font-weight:700;
-}}
-.link-bar .paperclip-offline{{
-    color:#f59e0b;background:#f59e0b10;border:1px solid #f59e0b40;font-weight:700;
-}}
-.link-bar span{{
-    font-size:12px;padding:8px 16px;border-radius:10px;display:inline-block;
-}}
-.link-bar a:hover{{background:#1e1e2e;color:#f1f5f9;border-color:#2d2d3d}}
-
-.footer{{text-align:center;padding:24px;font-size:11px;color:#1e1e2e;letter-spacing:2px}}
-
-/* Scanning line animation */
-.scan-line{{
-    position:fixed;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,transparent,#00ff8860,transparent);
-    animation:scan 8s linear infinite;
-    pointer-events:none;z-index:100
-}}
-@keyframes scan{{
-    0%{{top:0;opacity:0}}10%{{opacity:1}}90%{{opacity:1}}100%{{top:100vh;opacity:0}}
-}}
-
-@media(max-width:768px){{
-    .link-bar{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
-    .link-bar a,.link-bar span{{display:block;text-align:center;width:100%}}
-    .link-bar .paperclip-link{{grid-column:1/-1}}
-    .agents-grid{{grid-template-columns:1fr}}
-    .task-board{{grid-template-columns:1fr}}
-    .seo-grid{{grid-template-columns:repeat(2,1fr)}}
-    .kpi-strip{{gap:8px}}
-    .kpi{{min-width:80px;padding:12px 16px}}
-    .kpi-val{{font-size:24px}}
-}}
+:root {
+    --bg:#f3f6f4;
+    --surface:#ffffff;
+    --surface-soft:#f8faf9;
+    --ink:#12211b;
+    --muted:#66756f;
+    --line:#dfe7e2;
+    --green:#0f8a52;
+    --green-dark:#0b3d2a;
+    --blue:#2563eb;
+    --red:#dc2626;
+    --amber:#b7791f;
+    --slate:#64748b;
+    --shadow:0 18px 50px rgba(18,33,27,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#eef4f0 0%,#f7f9f8 46%,#eef2f0 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+a{color:inherit;text-decoration:none}
+.page{width:min(1240px,calc(100% - 32px));margin:0 auto;padding:24px 0 34px}
+.hero{background:radial-gradient(circle at top left,rgba(41,184,119,.38),transparent 34%),linear-gradient(135deg,#092417 0%,#0e3d2a 54%,#14221c 100%);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px;box-shadow:var(--shadow);color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset:auto -80px -120px auto;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(4px)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;position:relative;z-index:1}
+.eyebrow{margin:0 0 8px;color:#b8e5cf;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em;font-weight:900}
+.hero-copy{max-width:620px;margin:14px 0 0;color:#dcefe6;font-size:15px}
+.status-block{text-align:right;min-width:190px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:14px 16px;backdrop-filter:blur(12px)}
+.status-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#b8e5cf;font-weight:800}
+.status-value{margin-top:5px;font-size:22px;font-weight:900}.status-value.ok{color:#86efac}.status-value.danger{color:#fecaca}
+.updated{margin-top:5px;color:#dcefe6;font-size:12px}
+.link-bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;position:relative;z-index:1}
+.link-bar a,.link-bar span{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.10);color:#eefbf4;border-radius:999px;padding:10px 13px;font-size:13px;font-weight:750;backdrop-filter:blur(10px)}
+.link-bar a:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
+.link-bar .primary-link{background:#fff;color:#0b3d2a;border-color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.link-bar .primary-link.muted{background:rgba(183,121,31,.18);border-color:rgba(251,191,36,.36);color:#fde68a;box-shadow:none}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:18px 0}
+.kpi-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 10px 30px rgba(18,33,27,.055);position:relative;overflow:hidden}
+.kpi-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,var(--green))}.accent-blue{--accent:var(--blue)}.accent-slate{--accent:var(--slate)}.accent-red{--accent:var(--red)}.accent-green{--accent:var(--green)}
+.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:900}.kpi-value{margin-top:8px;font-size:30px;line-height:1;font-weight:950;letter-spacing:-.05em}.kpi-note{margin-top:8px;color:var(--muted);font-size:12px}
+.panel{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow);margin-top:16px;backdrop-filter:blur(18px)}
+.panel-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px}.panel-header h2{margin:0;font-size:20px;letter-spacing:-.03em}.panel-header p{margin:4px 0 0;color:var(--muted);font-size:13px}.panel-count{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em}
+.agent-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.agent-card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--agent);border-radius:18px;padding:15px;min-height:228px;display:flex;flex-direction:column;gap:12px}.agent-topline{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center}.agent-avatar{width:44px;height:44px;border-radius:14px;background:color-mix(in srgb,var(--agent) 13%,#fff);display:flex;align-items:center;justify-content:center;font-size:23px}.agent-card h3{margin:0;font-size:17px}.agent-card .agent-topline p{margin:2px 0 0;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}.agent-desc{margin:0;color:#4d5d57;font-size:13px;min-height:38px}.agent-status{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.agent-status.active{background:#dcfce7;color:#166534}.agent-status.idle{background:#f1f5f9;color:#475569}.agent-status.danger{background:#fee2e2;color:#991b1b}.activity-list{list-style:none;padding:0;margin:auto 0 0;display:grid;gap:7px}.activity-list li{display:grid;grid-template-columns:18px 1fr auto;gap:7px;align-items:center;color:#475569;font-size:12px;border-top:1px solid #edf2ef;padding-top:7px}.activity-list time{font-size:11px;color:#8b9893}.activity-dot{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}.activity-dot.ok,.activity-dot.active{background:#dcfce7;color:#166534}.activity-dot.idle{background:#f1f5f9;color:#64748b}.activity-dot.warn{background:#fef3c7;color:#92400e}.activity-dot.danger{background:#fee2e2;color:#991b1b}.quiet-line{display:block!important;color:#8b9893!important}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface)}table{width:100%;border-collapse:collapse;min-width:840px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid #edf2ef;font-size:13px;vertical-align:middle}th{position:sticky;top:0;background:#f8faf9;color:#66756f;font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;z-index:1}tr:last-child td{border-bottom:0}.job-name{font-weight:750;color:#23362f}.agent-chip{display:inline-flex;align-items:center;gap:5px;background:color-mix(in srgb,var(--agent) 12%,#fff);color:var(--agent);border-radius:999px;padding:6px 10px;font-size:12px;font-weight:850;white-space:nowrap}.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.08em}.pill.ok,.pill.active{background:#dcfce7;color:#166534}.pill.idle{background:#f1f5f9;color:#475569}.pill.warn{background:#fef3c7;color:#92400e}.pill.danger{background:#fee2e2;color:#991b1b}.empty-table{text-align:center;color:var(--muted)}
+.task-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.task-column{background:#f8faf9;border:1px solid var(--line);border-radius:18px;padding:14px}.task-column h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:#53615c}.task-column h3 span{float:right;color:#99a5a0}.task-card{background:#fff;border:1px solid #e7eee9;border-left:4px solid var(--accent);border-radius:14px;padding:12px;margin-bottom:10px}.task-meta{display:flex;justify-content:space-between;gap:8px;color:#7a8983;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.task-card p{margin:8px 0 10px;color:#273b33;font-size:13px}.empty-state{border:1px dashed #cfdad4;border-radius:14px;padding:18px;color:#8b9893;text-align:center;font-size:13px;background:#fff}
+.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini-stat{background:#f8faf9;border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}.mini-stat strong{display:block;font-size:26px;letter-spacing:-.04em}.mini-stat span{display:block;margin-top:4px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900}.footer{text-align:center;color:#8b9893;font-size:12px;padding:24px 0 4px}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.agent-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.page{width:min(100% - 20px,720px);padding-top:10px}.hero{border-radius:22px;padding:18px}.hero-top{display:block}.status-block{text-align:left;margin-top:16px}.link-bar{display:grid;grid-template-columns:1fr 1fr}.link-bar .primary-link{grid-column:1/-1}.kpi-grid{grid-template-columns:repeat(2,1fr)}.agent-grid,.task-board,.mini-grid{grid-template-columns:1fr}.panel{border-radius:20px;padding:16px}.panel-header{display:block}.agent-card{min-height:0}.activity-list li{grid-template-columns:18px 1fr}.activity-list time{grid-column:2}}
 </style>
 </head>
 <body>
-
-<div class="scan-line"></div>
-
-<div class="container">
-
-<div class="header">
-    <h1>COMMAND CENTER</h1>
-    <div class="subtitle">Onelife Health · Mission Control</div>
-    <div class="timestamp">SYS.TIME {now.strftime('%Y-%m-%d %H:%M:%S')} SAST // ALL SYSTEMS {'NOMINAL' if cron_err == 0 else 'ALERT'}</div>
-</div>
-
-<div class="link-bar">
-    {paperclip_link}
-    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/daily.html">📋 Daily Summary Onelife</a>
-    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/cash-integrity.html">🔒 Cash Integrity</a>
-    <a href="https://infoonelifesa-cpu.github.io/onelife-intelligence/">📊 Intelligence</a>
-    <a href="https://infoonelifesa-cpu.github.io/onelife-missions/">🎯 Missions</a>
-</div>
-
-<!-- KPI Strip -->
-<div class="kpi-strip">
-    <div class="kpi" style="--accent:#3b82f6"><div class="kpi-val" style="color:#3b82f6">{len(active)}</div><div class="kpi-lbl">Active</div></div>
-    <div class="kpi" style="--accent:#64748b"><div class="kpi-val" style="color:#64748b">{len(pending)}</div><div class="kpi-lbl">Pending</div></div>
-    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:#ef4444">{len(blocked)}</div><div class="kpi-lbl">Blocked</div></div>
-    <div class="kpi" style="--accent:#22c55e"><div class="kpi-val" style="color:#22c55e">{len(done)}</div><div class="kpi-lbl">Done</div></div>
-    <div class="kpi" style="--accent:#00ff88"><div class="kpi-val" style="color:{'#22c55e' if cron_err==0 else '#ef4444'}">{cron_ok}<span style="font-size:16px;color:#404040">/{cron_total}</span></div><div class="kpi-lbl">Crons</div></div>
-    <div class="kpi" style="--accent:#ef4444"><div class="kpi-val" style="color:{'#22c55e' if cron_err==0 else '#ef4444'}">{cron_err}</div><div class="kpi-lbl">Errors</div></div>
-</div>
-
-<!-- Org Hierarchy -->
-<div class="org-chart">
-    <div class="org-chart-title">ORG HIERARCHY — ALL AGENTS REPORT TO JARVIS</div>
-    <div class="org-ceo">
-        <span style="font-size:26px">🦞</span>
-        <span style="font-size:20px;font-weight:800;color:#00ff88">Jarvis</span>
-        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:2px;border-left:1px solid #1e1e2e;padding-left:12px;margin-left:4px">CEO / Orchestrator</span>
-    </div>
-    <div style="width:2px;height:20px;background:linear-gradient(#00ff8830,#1e1e2e);margin:0 auto 12px"></div>
-    <div class="org-reports">
-        <div class="org-node" style="border-top-color:#ec4899">✨ Nova<small>CMO</small></div>
-        <div class="org-node" style="border-top-color:#f59e0b">🔐 Cipher<small>CTO</small></div>
-        <div class="org-node" style="border-top-color:#8b5cf6">👻 Ghost<small>DevOps</small></div>
-        <div class="org-node" style="border-top-color:#3b82f6">🔭 Scout<small>Intel</small></div>
-        <div class="org-node" style="border-top-color:#a855f7">🧙 Sage<small>Analysis</small></div>
-        <div class="org-node" style="border-top-color:#22c55e">💚 Vivid<small>Brand PM</small></div>
-        <div class="org-node" style="border-top-color:#06b6d4">🌙 Kimi<small>Fallback</small></div>
-    </div>
-</div>
-
-<!-- Agent Roster -->
-<div class="section">
-    <div class="section-title">AGENT ROSTER</div>
-    <div class="agents-grid">
-        {agent_cards}
-    </div>
-</div>
-
-<!-- Cron Monitor -->
-<div class="section">
-    <div class="section-title">AUTOMATION GRID — {cron_total} Jobs</div>
-    <table>
-        <thead><tr><th>Agent</th><th>Job</th><th>Model</th><th>Last Run</th><th>Next</th><th>Status</th></tr></thead>
-        <tbody>{cron_rows}</tbody>
-    </table>
-</div>
-
-<!-- Task Board -->
-<div class="section">
-    <div class="section-title">TASK BOARD</div>
-    <div class="task-board">
-        <div>
-            <div class="task-column-header">🔵 Active ({len(active)})</div>
-            {active_cards if active_cards else '<div style="color:#404040;font-size:12px;padding:12px">No active tasks</div>'}
+<main class="page">
+    <section class="hero">
+        <div class="hero-top">
+            <div>
+                <p class="eyebrow">Onelife Health operations</p>
+                <h1>Command Center</h1>
+                <p class="hero-copy">A cleaner operator view for tasks, automations, agent ownership, and the core reporting links. Built for fast scanning, not sci-fi cosplay.</p>
+            </div>
+            <aside class="status-block">
+                <div class="status-label">System status</div>
+                <div class="status-value $system_class">$system_state</div>
+                <div class="updated">Updated $now_str</div>
+            </aside>
         </div>
-        <div>
-            <div class="task-column-header">⏳ Pending ({len(pending)})</div>
-            {pending_cards if pending_cards else '<div style="color:#404040;font-size:12px;padding:12px">No pending tasks</div>'}
+        <nav class="link-bar">$link_bar</nav>
+    </section>
+
+    <section class="kpi-grid">$kpi_cards</section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>Agent roster</h2>
+                <p>Who owns what, with recent automation activity.</p>
+            </div>
+            <div class="panel-count">$agent_count agents</div>
         </div>
-        <div>
-            <div class="task-column-header">✅ Done ({len(done)})</div>
-            {done_cards if done_cards else '<div style="color:#404040;font-size:12px;padding:12px">No completed tasks</div>'}
+        <div class="agent-grid">$agent_cards</div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>Automation grid</h2>
+                <p>Live cron ownership, last run, next run, model, and health.</p>
+            </div>
+            <div class="panel-count">$cron_total jobs</div>
         </div>
-    </div>
-</div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Owner</th><th>Job</th><th>Model</th><th>Last run</th><th>Next</th><th>Status</th></tr></thead>
+                <tbody>$cron_rows</tbody>
+            </table>
+        </div>
+    </section>
 
-<!-- SEO Progress -->
-<div class="section">
-    <div class="section-title">SEO & CONTENT METRICS</div>
-    <div class="seo-grid">
-        <div class="seo-item"><div class="seo-num">{seo.get('blog_posts',0)}</div><div class="seo-lbl">Blog Posts</div></div>
-        <div class="seo-item"><div class="seo-num">{seo.get('image_alts',0):,}</div><div class="seo-lbl">Image Alts</div></div>
-        <div class="seo-item"><div class="seo-num">{seo.get('product_descriptions',0):,}</div><div class="seo-lbl">Descriptions</div></div>
-        <div class="seo-item"><div class="seo-num">{seo.get('guide_pages',0)}</div><div class="seo-lbl">Guide Pages</div></div>
-    </div>
-</div>
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>Task board</h2>
+                <p>Active, pending, and recently completed work.</p>
+            </div>
+            <div class="panel-count">$task_total total</div>
+        </div>
+        <div class="task-board">$task_columns</div>
+    </section>
 
-<div class="footer">COMMAND CENTER × JARVIS 🦞 × OPENCLAW // {now.strftime('%d %B %Y')}</div>
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>SEO & content metrics</h2>
+                <p>Current output counters used by the content engine.</p>
+            </div>
+        </div>
+        <div class="mini-grid">$seo_items</div>
+    </section>
 
-</div>
+    <footer class="footer">Jarvis 🦞 × OpenClaw × Onelife Health · $footer_date</footer>
+</main>
 </body>
 </html>"""
+    ).safe_substitute(
+        title_date=now.strftime("%d %b"),
+        system_class=system_class,
+        system_state=system_state,
+        now_str=now_str,
+        link_bar=render_link_bar(load_paperclip_public_url()),
+        kpi_cards=render_kpi_cards(active, pending, blocked, done, cron_ok, cron_total, cron_err),
+        agent_count=len(AGENTS),
+        agent_cards=render_agent_cards(crons),
+        cron_total=cron_total,
+        cron_rows=render_cron_rows(crons),
+        task_total=len(tasks),
+        task_columns="\n".join(
+            [
+                render_task_column("Active", active, "No active tasks"),
+                render_task_column("Pending", pending, "No pending tasks"),
+                render_task_column("Done", done[:6], "No completed tasks"),
+            ]
+        ),
+        seo_items=render_seo_items(seo),
+        footer_date=now.strftime("%d %B %Y"),
+    )
 
     out = os.path.join(SCRIPT_DIR, "index.html")
     with open(out, "w") as f:
