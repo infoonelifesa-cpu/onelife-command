@@ -66,8 +66,8 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
             </div>
             <aside class="status-block">
                 <div class="status-label">System status</div>
-                <div class="status-value ok">Healthy</div>
-                <div class="updated">Updated 13 May 2026, 02:13 SAST</div>
+                <div class="status-value danger">Action needed</div>
+                <div class="updated">Updated 13 May 2026, 02:18 SAST</div>
             </aside>
         </div>
         <nav class="link-bar"><a class="primary-link" href="https://nominations-average-breach-chris.trycloudflare.com" target="_blank" rel="noopener noreferrer">📎 Paperclip</a>
@@ -102,16 +102,16 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
             <div class="kpi-note">Closed items</div>
         </article>
 
-        <article class="kpi-card accent-green">
+        <article class="kpi-card accent-red">
             <div class="kpi-label">Cron health</div>
             <div class="kpi-value">29/32</div>
-            <div class="kpi-note">Healthy automations</div>
+            <div class="kpi-note">Automation alerts</div>
         </article>
 
-        <article class="kpi-card accent-green">
+        <article class="kpi-card accent-red">
             <div class="kpi-label">Errors</div>
-            <div class="kpi-value">0</div>
-            <div class="kpi-note">No active failures</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-note">Active failures</div>
         </article></section>
 
     <section class="panel">
@@ -130,16 +130,10 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                         <h3>Jarvis</h3>
                         <p>CEO / Orchestrator</p>
                     </div>
-                    <span class="agent-status active">Active</span>
+                    <span class="agent-status danger">Error</span>
                 </div>
                 <p class="agent-desc">Owns prioritisation, handoffs, and the operator layer around Naadir.</p>
                 <ul class="activity-list">
-                <li>
-                    <span class="activity-dot idle">?</span>
-                    <span title="Discovery Engine: BUILD">Discovery Engine: BUILD</span>
-                    <time>2d ago</time>
-                </li>
-
                 <li>
                     <span class="activity-dot ok">✓</span>
                     <span title="OpenClaw: Daily Syste">OpenClaw: Daily Syste</span>
@@ -150,6 +144,12 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                     <span class="activity-dot ok">✓</span>
                     <span title="Jarvis: Onelife Email">Jarvis: Onelife Email</span>
                     <time>6h ago</time>
+                </li>
+
+                <li>
+                    <span class="activity-dot ok">✓</span>
+                    <span title="Onelife ecommerce smo">Onelife ecommerce smo</span>
+                    <time>19h ago</time>
                 </li></ul>
             </article>
 
@@ -167,7 +167,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <li>
                     <span class="activity-dot ok">✓</span>
                     <span title="Ghost: Morning Dashboard">Ghost: Morning Dashboard</span>
-                    <time>19h ago</time>
+                    <time>20h ago</time>
                 </li>
 
                 <li>
@@ -309,20 +309,11 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <thead><tr><th>Owner</th><th>Job</th><th>Model</th><th>Last run</th><th>Next</th><th>Status</th></tr></thead>
                 <tbody>
             <tr>
-                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
-                <td class="job-name">Discovery Engine: BUILD</td>
-                <td>gpt-5.5</td>
-                <td>2d ago</td>
-                <td>—</td>
-                <td><span class="pill idle">Unknown</span></td>
-            </tr>
-
-            <tr>
                 <td><span class="agent-chip" style="--agent:#2563eb">🔭 Scout</span></td>
                 <td class="job-name">Scout: Product Trend </td>
                 <td>gpt-5.5</td>
                 <td>7d ago</td>
-                <td>47m</td>
+                <td>42m</td>
                 <td><span class="pill ok">OK</span></td>
             </tr>
 
@@ -357,8 +348,8 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td><span class="agent-chip" style="--agent:#6d5dfc">👻 Ghost</span></td>
                 <td class="job-name">Ghost: Morning Dashboard</td>
                 <td>gpt-5.5</td>
-                <td>19h ago</td>
-                <td>5h</td>
+                <td>20h ago</td>
+                <td>4h</td>
                 <td><span class="pill ok">OK</span></td>
             </tr>
 
@@ -486,6 +477,15 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td>6d ago</td>
                 <td>1d</td>
                 <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">Discovery Engine: BUILD</td>
+                <td>gpt-5.5</td>
+                <td>18m ago</td>
+                <td>2d</td>
+                <td><span class="pill danger">Error</span></td>
             </tr>
 
             <tr>
