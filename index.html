@@ -66,8 +66,8 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
             </div>
             <aside class="status-block">
                 <div class="status-label">System status</div>
-                <div class="status-value ok">Healthy</div>
-                <div class="updated">Updated 19 May 2026, 18:36 SAST</div>
+                <div class="status-value danger">Action needed</div>
+                <div class="updated">Updated 19 May 2026, 18:41 SAST</div>
             </aside>
         </div>
         <nav class="link-bar"><span class="primary-link muted">📎 Paperclip offline</span>
@@ -102,16 +102,16 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
             <div class="kpi-note">Closed items</div>
         </article>
 
-        <article class="kpi-card accent-green">
+        <article class="kpi-card accent-red">
             <div class="kpi-label">Cron health</div>
-            <div class="kpi-value">17/19</div>
-            <div class="kpi-note">Healthy automations</div>
+            <div class="kpi-value">25/30</div>
+            <div class="kpi-note">Automation alerts</div>
         </article>
 
-        <article class="kpi-card accent-green">
+        <article class="kpi-card accent-red">
             <div class="kpi-label">Errors</div>
-            <div class="kpi-value">0</div>
-            <div class="kpi-note">No active failures</div>
+            <div class="kpi-value">3</div>
+            <div class="kpi-note">Active failures</div>
         </article></section>
 
     <section class="panel">
@@ -130,7 +130,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                         <h3>Jarvis</h3>
                         <p>CEO / Orchestrator</p>
                     </div>
-                    <span class="agent-status idle">Standby</span>
+                    <span class="agent-status active">Active</span>
                 </div>
                 <p class="agent-desc">Owns prioritisation, handoffs, and the operator layer around Naadir.</p>
                 <ul class="activity-list">
@@ -142,14 +142,14 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
 
                 <li>
                     <span class="activity-dot ok">✓</span>
-                    <span title="Jarvis: Onelife Email">Jarvis: Onelife Email</span>
-                    <time>6h ago</time>
+                    <span title="Paperclip: Backlog Guard">Paperclip: Backlog Guard</span>
+                    <time>11h ago</time>
                 </li>
 
                 <li>
                     <span class="activity-dot ok">✓</span>
-                    <span title="Discovery Engine: BUILD">Discovery Engine: BUILD</span>
-                    <time>2d ago</time>
+                    <span title="Jarvis: Onelife Email">Jarvis: Onelife Email</span>
+                    <time>6h ago</time>
                 </li></ul>
             </article>
 
@@ -160,7 +160,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                         <h3>Ghost</h3>
                         <p>DevOps / Building</p>
                     </div>
-                    <span class="agent-status idle">Standby</span>
+                    <span class="agent-status danger">Error</span>
                 </div>
                 <p class="agent-desc">Keeps dashboards, syncs, builds, and routine plumbing alive.</p>
                 <ul class="activity-list">
@@ -168,6 +168,18 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                     <span class="activity-dot ok">✓</span>
                     <span title="Ghost: Intelligence D">Ghost: Intelligence D</span>
                     <time>23h ago</time>
+                </li>
+
+                <li>
+                    <span class="activity-dot danger">!</span>
+                    <span title="Ghost: Morning Dashboard">Ghost: Morning Dashboard</span>
+                    <time>12h ago</time>
+                </li>
+
+                <li>
+                    <span class="activity-dot ok">✓</span>
+                    <span title="Ghost: Omni-Shopify Sync">Ghost: Omni-Shopify Sync</span>
+                    <time>3h ago</time>
                 </li></ul>
             </article>
 
@@ -178,7 +190,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                         <h3>Scout</h3>
                         <p>Intelligence / Research</p>
                     </div>
-                    <span class="agent-status idle">Standby</span>
+                    <span class="agent-status danger">Error</span>
                 </div>
                 <p class="agent-desc">Finds competitors, pricing moves, SEO gaps, and market signals.</p>
                 <ul class="activity-list">
@@ -189,15 +201,15 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 </li>
 
                 <li>
-                    <span class="activity-dot ok">✓</span>
-                    <span title="Scout: Weekly Blog Op">Scout: Weekly Blog Op</span>
-                    <time>5d ago</time>
+                    <span class="activity-dot danger">!</span>
+                    <span title="Scout: Daily Ops Dash">Scout: Daily Ops Dash</span>
+                    <time>6h ago</time>
                 </li>
 
                 <li>
                     <span class="activity-dot ok">✓</span>
-                    <span title="Scout: Review Miner">Scout: Review Miner</span>
-                    <time>16h ago</time>
+                    <span title="Scout: Weekly Blog Op">Scout: Weekly Blog Op</span>
+                    <time>5d ago</time>
                 </li></ul>
             </article>
 
@@ -221,25 +233,25 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                         <h3>Nova</h3>
                         <p>CMO / Marketing</p>
                     </div>
-                    <span class="agent-status idle">Standby</span>
+                    <span class="agent-status danger">Error</span>
                 </div>
                 <p class="agent-desc">Creative output, TikTok batches, ads, blogs, and campaigns.</p>
                 <ul class="activity-list">
                 <li>
+                    <span class="activity-dot danger">!</span>
+                    <span title="Nova: TikTok Daily An">Nova: TikTok Daily An</span>
+                    <time>9h ago</time>
+                </li>
+
+                <li>
+                    <span class="activity-dot ok">✓</span>
+                    <span title="Nova: Thursday Ad Pip">Nova: Thursday Ad Pip</span>
+                    <time>6d ago</time>
+                </li>
+
+                <li>
                     <span class="activity-dot ok">✓</span>
                     <span title="Nova: Ad Feedback Loop">Nova: Ad Feedback Loop</span>
-                    <time>4d ago</time>
-                </li>
-
-                <li>
-                    <span class="activity-dot ok">✓</span>
-                    <span title="Nova: Sunday TikTok C">Nova: Sunday TikTok C</span>
-                    <time>2d ago</time>
-                </li>
-
-                <li>
-                    <span class="activity-dot ok">✓</span>
-                    <span title="Nova: Monthly Blog Ca">Nova: Monthly Blog Ca</span>
                     <time>4d ago</time>
                 </li></ul>
             </article>
@@ -290,7 +302,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <h2>Automation grid</h2>
                 <p>Live cron ownership, last run, next run, model, and health.</p>
             </div>
-            <div class="panel-count">19 jobs</div>
+            <div class="panel-count">30 jobs</div>
         </div>
         <div class="table-wrap">
             <table>
@@ -301,7 +313,16 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td class="job-name">Google Reviews Check</td>
                 <td>gpt-5.5</td>
                 <td>23h ago</td>
-                <td>43m</td>
+                <td>38m</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">Paperclip: Backlog Guard</td>
+                <td>gpt-5.5</td>
+                <td>11h ago</td>
+                <td>38m</td>
                 <td><span class="pill ok">OK</span></td>
             </tr>
 
@@ -310,7 +331,7 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td class="job-name">Ghost: Intelligence D</td>
                 <td>gpt-5.5</td>
                 <td>23h ago</td>
-                <td>53m</td>
+                <td>48m</td>
                 <td><span class="pill ok">OK</span></td>
             </tr>
 
@@ -343,6 +364,78 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
 
             <tr>
                 <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">OpenClaw: Daily Syste</td>
+                <td>gpt-5.5</td>
+                <td>4h ago</td>
+                <td>11h</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#2563eb">🔭 Scout</span></td>
+                <td class="job-name">Scout: Daily Ops Dash</td>
+                <td>gpt-5.5</td>
+                <td>6h ago</td>
+                <td>11h</td>
+                <td><span class="pill danger">Error</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#6d5dfc">👻 Ghost</span></td>
+                <td class="job-name">Ghost: Morning Dashboard</td>
+                <td>gpt-5.5</td>
+                <td>12h ago</td>
+                <td>12h</td>
+                <td><span class="pill danger">Error</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">Onelife ecommerce smo</td>
+                <td>gpt-5.5</td>
+                <td>6h ago</td>
+                <td>12h</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">Paperclip: Routine Re</td>
+                <td>gpt-5.5</td>
+                <td>12h ago</td>
+                <td>12h</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#db2777">✨ Nova</span></td>
+                <td class="job-name">Nova: TikTok Daily An</td>
+                <td>gpt-5.5</td>
+                <td>9h ago</td>
+                <td>15h</td>
+                <td><span class="pill danger">Error</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#6d5dfc">👻 Ghost</span></td>
+                <td class="job-name">Ghost: Omni-Shopify Sync</td>
+                <td>gpt-5.5</td>
+                <td>3h ago</td>
+                <td>15h</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
+                <td class="job-name">Whoop Daily Briefing </td>
+                <td>gpt-5.5</td>
+                <td>5h ago</td>
+                <td>19h</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#0f8a52">🦞 Jarvis</span></td>
                 <td class="job-name">X Trends: Business Si</td>
                 <td>gpt-5.5</td>
                 <td>6d ago</td>
@@ -355,6 +448,15 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td class="job-name">Discovery Engine: BUY</td>
                 <td>gpt-5.5</td>
                 <td>17h ago</td>
+                <td>1d</td>
+                <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#db2777">✨ Nova</span></td>
+                <td class="job-name">Nova: Thursday Ad Pip</td>
+                <td>gpt-5.5</td>
+                <td>6d ago</td>
                 <td>1d</td>
                 <td><span class="pill ok">OK</span></td>
             </tr>
@@ -402,6 +504,15 @@ h1{margin:0;font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.06em
                 <td>2d ago</td>
                 <td>5d</td>
                 <td><span class="pill ok">OK</span></td>
+            </tr>
+
+            <tr>
+                <td><span class="agent-chip" style="--agent:#db2777">✨ Nova</span></td>
+                <td class="job-name">Nova: Monday Ad Pipel</td>
+                <td>gpt-5.5</td>
+                <td>2d ago</td>
+                <td>5d</td>
+                <td><span class="pill warn">Stale</span></td>
             </tr>
 
             <tr>
